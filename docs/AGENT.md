@@ -612,21 +612,19 @@ python -m agent serve --open
 > `serve` 在 LLM 健康检查失败时会自动降级到离线策略（`--no-fallback-offline` 可关闭），
 > 因此没有 Ollama 也能直接使用 Web UI。
 
-![Web 界面](assets/ui-home.png)
+![当前 Web 界面](assets/ui-home.png)
 
-前端是零构建的原生 HTML/CSS/JS（`web/index.html`、`web/styles.css`、`web/app.js`），
-由 FastAPI 同源托管，不依赖 Node、npm 或外部 CDN。
+当前公网/交互页面是 `web/remote.html`，由 FastAPI 同源托管，零构建、无外部 CDN：
 
-- **流式过程**：思考、工具调用、observation、警告、预算停止实时出现；
-- **引用联动**：回答中的 `[S1]` 可点击，定位到下方来源（手册 / 页码 / 章节 / chunk）；
-- **运行轨迹面板**：状态、耗时、步数、工具次数、tokens、步骤详情、原始 JSON；
-- **会话**：localStorage 保存历史；请求同时携带 `session_id` 与最近 12 条 `history`，
-  即使服务端记忆关闭也能多轮；
-- **工具与健康**：侧边栏展示工具目录与 LLM/知识库健康状态；
-- **演示**：`/?demo=1` 自动执行电池低温示例；`/?q=你的问题` 预填并发送；
-- **响应式**：桌面三栏、窄屏抽屉式侧边栏与轨迹面板；深/浅主题。
+- 浅色编辑风布局，深色侧边栏；
+- fast / normal / auto 三种模式，默认自动按风险路由；
+- 异步任务 + 进度状态，适配公网隧道；
+- 页面级 `[S1]` 引用；
+- 图片上传缩略图 + 发送后聊天气泡显示；
+- Qwen3-VL 图片观察 + RapidOCR 文字兜底；
+- 最近会话与多用户 session 隔离。
 
-欢迎页截图：`docs/assets/ui-welcome.png`；窄屏预览：`docs/assets/ui-mobile.png`。
+旧的 `web/index.html`（深色三栏运行轨迹）仍保留为本地调试入口，但不再是默认展示页。
 
 ### 9.6 Python API
 

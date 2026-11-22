@@ -7,7 +7,7 @@
 
 > 一句话：**RAG 不再是整个应用，而是 Agent 手里的一件工具。**
 
-![DJI 手册 Agent Web 界面](docs/assets/ui-home.png)
+![当前 DJI 手册 Agent Web 界面（/remote）](docs/assets/ui-home.png)
 
 ## 可复现 Demo（推荐）
 
