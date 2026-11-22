@@ -612,7 +612,7 @@ python -m agent serve --open
 > `serve` 在 LLM 健康检查失败时会自动降级到离线策略（`--no-fallback-offline` 可关闭），
 > 因此没有 Ollama 也能直接使用 Web UI。
 
-![当前 Web 界面](assets/ui-home.png)
+![当前 Web 界面](assets/ui-remote-current.png)
 
 当前公网/交互页面是 `web/remote.html`，由 FastAPI 同源托管，零构建、无外部 CDN：
 
