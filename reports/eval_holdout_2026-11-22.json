@@ -1,0 +1,1422 @@
+{
+  "cases": "data\\eval_holdout_v2.jsonl",
+  "config": "configs\\agent.deepseek.yaml",
+  "total": 24,
+  "passed": 23,
+  "pass_rate": 0.9583,
+  "citation_rate": 1.0,
+  "claim_rate": 0.9583,
+  "number_rate": 0.9583,
+  "avg_duration_ms": 10299.7,
+  "elapsed_sec": 247.2,
+  "failures": [
+    {
+      "id": "h-air3s-charging",
+      "question": "Air 3S 的充电管家能给几块电池充电？",
+      "passed": false,
+      "checks": {
+        "status": true,
+        "citations": true,
+        "claims": false,
+        "numbers": false
+      },
+      "status": "ok",
+      "answer": "**结论：DJI Air 3S 的充电管家最多可为 3 块智能飞行电池充电** [S2]。\n\n细节：\n\n- 充电时，把电池插入充电管家的电池接口，再用充电器把充电管家连接到交流电源；充电管家会按电量从高到低，依次为电池充电 [S1]。\n- 充电完成后，电池可以留在充电管家中保存 [S1]。\n- 充电管家还支持通过 USB-C 接口为遥控器、手机等外部设备供电：这时电池会按剩余电量由低到高依次对外放电；如果电池剩余电量少于 7%，就无法为外部设备供电 [S1][S2]。\n- 它还支持「集电」功能：把多块低电量电池的剩余电量，集中到剩余电量最高的那块电池中 [S2]。\n- 手册提示：充电管家只适用于为指定型号的智能飞行电池充电，请勿用它为其他型号的电池充电；使用时请平稳放置，并注意绝缘与防火，也不要用手或其它物体触碰金属端子 [S2]。\n\n如果你想了解充电管家装满 3 块电池大约需要多久，或者想了解「集电」功能的完整操作步骤，可以告诉我，我可以继续查手册。",
+      "citations": [
+        {
+          "ref": "S2",
+          "doc_id": "dji_air_3s_user_manual_v1_0_zh_cn",
+          "page": 51,
+          "title": "DJI Air 3S 用户手册 v1.0"
+        },
+        {
+          "ref": "S1",
+          "doc_id": "dji_air_3s_user_manual_v1_0_zh_cn",
+          "page": 52,
+          "title": "DJI Air 3S 用户手册 v1.0"
+        }
+      ],
+      "citation_count": 2,
+      "duration_ms": 7160.0,
+      "usage": {
+        "prompt_tokens": 9222,
+        "completion_tokens": 987,
+        "llm_calls": 3,
+        "tool_calls": 2
+      },
+      "warnings": [],
+      "tags": [
+        "charging",
+        "air3s"
+      ]
+    }
+  ],
+  "rows": [
+    {
+      "id": "h-m4p-vision",
+      "question": "Mavic 4 Pro 的视觉定位在无卫星信号时有什么限制？",
+      "passed": true,
+      "checks": {
+        "status": true,
+        "citations": true,
+        "claims": true,
+        "numbers": true
+      },
+      "status": "ok",
+      "answer": "## 结论\n\n在无卫星信号时，Mavic 4 Pro 会自动切换到视觉定位来接替卫星定位悬停 [S2]，但视觉定位有严格的高度、光照和地表纹理限制；一旦这些条件不满足，飞行器会进入**姿态（ATTI）模式**，出现水平漂移，无法定点悬停和自主刹车，此时应尽快降落 [S1]。\n\n## 主要限制\n\n**1. 工作高度（无卫星定位时最关键的参数）**\n- 在开阔平坦场地，视觉定位最佳工作高度为 **0.5–30 m**；超出该范围，性能可能下降 [S4]。\n\n**2. 光照条件**\n- 环境光线不足时，**即使开启补光灯，视觉定位也无法达到最佳性能**；此时如果卫星信号不佳，请谨慎飞行 [S4]。\n- 视觉系统无法在光照 **< 0.1 lux 或 > 40,000 lux** 的物体表面正常工作 [S4]。\n- 夜间飞行时，视觉系统不生效 [S7]。\n- 补光灯：起飞后，在环境光线不足且飞行高度 **5 m 以下**时默认自动开启，也可在 DJI Fly 中手动控制 [S2]。\n\n**3. 地表与场景条件（视觉系统无法正常工作）**\n- 纯色表面（纯黑、纯白、纯红、纯绿）；有强烈反光或倒影的表面（冰面、路牌）[S4]\n- 水面或透明物体表面 [S4]\n- 运动物体表面（人流上方、大风吹动的灌木丛上方）[S4]\n- 光照剧烈快速变化的场景 [S4]\n- 对红外强吸收或反射的材质（如镜面）[S4]\n- 纹理特别稀疏的表面、纹理重复度很高的表面（如颜色相同的小格子砖）[S4]\n- 细小障碍物（树枝、电线）[S4]\n- 大型镂空物体与线状物体（塔吊、高压输电塔/线、斜拉索桥梁）无法准确识别 [S4]\n- 雨雾天或能见度低于 100 m 的场景不宜飞行 [S4]\n\n**4. 不满足条件时的后果：进入姿态（ATTI）模式**\n- 卫星信号差或指南针受干扰，且不满足视觉定位工作条件时，飞行器进入 ATTI 模式；此时会**在水平方向产生漂移**，视觉系统以及部分智能飞行功能不可用，自身无法定点悬停、无法自主刹车，应尽快降落到安全位置 [S1]。\n- 状态指示灯可辅助判断：**黄灯慢闪 = 无卫星定位、无视觉定位（姿态模式）**；绿灯双闪 = 使用视觉系统定位 [S3]。\n\n**5. 对飞行高度限制与返航的影响**\n- 卫星定位信号不佳时：环境光线正常，限飞高度为相对起飞点 **30 m**；环境光线过暗且三维红外传感系统生效时，限飞高度为相对地面 **3 m**；三维红外传感系统失效时，限飞高度为相对起飞点 30 m [S6]。\n- 注意：每次开机过程中，只要出现过一次卫星定位信号等级 ≥ 2，该高度限制会自动解除，之后卫星信号变弱也不再受此高度限制 [S6]。\n- 返航方面：如果返航过程中视觉定位条件不满足，将无法返航到返航点；若在飞至卫星定位良好位置之前进入姿态模式，**返航点将失效** [S5]。\n- 安全指引也要求：GNSS 信号弱时，请在光照良好的环境中飞行；环境光线暗可能导致视觉系统无法正常工作 [S8]。\n\n## 补充提醒\n- 运动挡（Sport）下视觉系统不生效，飞行器无法主动刹车和避障 [S1]。因此，在无卫星信号时不要切换到运动挡飞行。\n- 不建议手动关闭视觉定位与避障（虽然可在系统设置中关闭）：关闭后飞行器只能依靠卫星定位保持悬停，此时在无卫星信号场景会失去定位手段 [S2]。\n\n如需针对具体场景（如室内、树荫下、夜间）判断风险，可以告诉我飞行环境细节，我再对照手册条款帮你核对。",
+      "citations": [
+        {
+          "ref": "S2",
+          "doc_id": "dji_mavic_4_pro_user_manual_v1_2_zh_cn",
+          "page": 44,
+          "title": "DJI Mavic 4 Pro 用户手册 v1.2"
+        },
+        {
+          "ref": "S1",
+          "doc_id": "dji_mavic_4_pro_user_manual_v1_2_zh_cn",
+          "page": 36,
+          "title": "DJI Mavic 4 Pro 用户手册 v1.2"
+        },
+        {
+          "ref": "S4",
+          "doc_id": "dji_mavic_4_pro_user_manual_v1_2_zh_cn",
+          "page": 45,
+          "title": "DJI Mavic 4 Pro 用户手册 v1.2"
+        },
+        {
+          "ref": "S7",
+          "doc_id": "dji_mavic_4_pro_user_manual_v1_2_zh_cn",
+          "page": 46,
+          "title": "DJI Mavic 4 Pro 用户手册 v1.2"
+        },
+        {
+          "ref": "S3",
+          "doc_id": "dji_mavic_4_pro_user_manual_v1_2_zh_cn",
+          "page": 37,
+          "title": "DJI Mavic 4 Pro 用户手册 v1.2"
+        },
+        {
+          "ref": "S6",
+          "doc_id": "dji_mavic_4_pro_user_manual_v1_2_zh_cn",
+          "page": 19,
+          "title": "DJI Mavic 4 Pro 用户手册 v1.2"
+        },
+        {
+          "ref": "S5",
+          "doc_id": "dji_mavic_4_pro_user_manual_v1_2_zh_cn",
+          "page": 41,
+          "title": "DJI Mavic 4 Pro 用户手册 v1.2"
+        },
+        {
+          "ref": "S8",
+          "doc_id": "dji_mavic_4_pro_safety_guidelines_rcpro2_v1_0",
+          "page": 4,
+          "title": "DJI Mavic 4 Pro 安全指引 v1.0"
+        }
+      ],
+      "citation_count": 8,
+      "duration_ms": 18831.9,
+      "usage": {
+        "prompt_tokens": 23032,
+        "completion_tokens": 2004,
+        "llm_calls": 3,
+        "tool_calls": 3
+      },
+      "warnings": [],
+      "tags": [
+        "vision",
+        "mavic4pro"
+      ]
+    },
+    {
+      "id": "h-m4p-flight-limit",
+      "question": "Mavic 4 Pro 在卫星信号不佳时的高度限制是多少？",
+      "passed": true,
+      "checks": {
+        "status": true,
+        "citations": true,
+        "claims": true,
+        "numbers": true
+      },
+      "status": "ok",
+      "answer": "**结论：Mavic 4 Pro 在卫星定位信号不佳时的高度限制为「相对起飞点 30 m」，但环境光线过暗且三维红外传感系统生效时会收紧到「相对地面 3 m」[S1]。**\n\n手册中明确列出的规则（DJI Mavic 4 Pro 用户手册 v1.2，第19页“飞行限制”表，卫星定位信号不佳一列）：\n\n| 场景 | 限飞高度 | App 提示 |\n|---|---|---|\n| 环境光线正常 | 相对起飞点高度 **30 m** | 提示已达到最大限飞高度 |\n| 环境光线过暗，且三维红外传感系统生效 | 相对地面 **3 m** | 同上 |\n| 三维红外传感系统失效（光线过暗情况下） | 相对起飞点高度 **30 m** | 同上 |\n\n- 同时“最远距离”为**无限制、无提示**；在卫星定位信号良好时，最远距离则受 App 中设置值限制 [S1]。\n- 配套规则：卫星定位有效时，限飞区限制与高度、距离限制共同生效；否则**飞行器仅受高度限制** [S2]。\n\n**一个重要例外（限制会自动解除）**：每次开机过程中，只要出现过一次卫星定位信号等级 ≥ 2，限飞高度的限制就自动解除；此后信号再次变弱，飞行器也不再受该高度限制 [S1]。\n\n**安全提醒**：在卫星信号差或指南针受干扰，并且不满足视觉定位工作条件时，飞行器会进入姿态（ATTI）模式；此时它会水平漂移，无法定点悬停和自主刹车，应尽快降落到安全位置 [S3]。此外，无卫星定位时请勿在水面、玻璃大楼、对地高度大于 30 m 的场景飞行 [S5]。\n\n说明：上述 30 m / 3 m 为手册原文数值，属于固件层面（GEO 飞行限制）的默认行为，与当地法规规定的合法飞行高度是两回事，飞行前仍须遵守当地法规 [S2]。如果你想确认某一具体固件版本是否调整过该数值，请告诉我固件版本号。",
+      "citations": [
+        {
+          "ref": "S1",
+          "doc_id": "dji_mavic_4_pro_user_manual_v1_2_zh_cn",
+          "page": 19,
+          "title": "DJI Mavic 4 Pro 用户手册 v1.2"
+        },
+        {
+          "ref": "S2",
+          "doc_id": "dji_mavic_4_pro_user_manual_v1_2_zh_cn",
+          "page": 18,
+          "title": "DJI Mavic 4 Pro 用户手册 v1.2"
+        },
+        {
+          "ref": "S3",
+          "doc_id": "dji_mavic_4_pro_user_manual_v1_2_zh_cn",
+          "page": 36,
+          "title": "DJI Mavic 4 Pro 用户手册 v1.2"
+        },
+        {
+          "ref": "S5",
+          "doc_id": "dji_mavic_4_pro_user_manual_v1_2_zh_cn",
+          "page": 38,
+          "title": "DJI Mavic 4 Pro 用户手册 v1.2"
+        }
+      ],
+      "citation_count": 4,
+      "duration_ms": 14474.3,
+      "usage": {
+        "prompt_tokens": 33287,
+        "completion_tokens": 2115,
+        "llm_calls": 5,
+        "tool_calls": 4
+      },
+      "warnings": [
+        "引用校验：支持度 71%，引用覆盖 64%，6 个问题",
+        "引用校验：句子包含事实性数值/主题词，但没有引用",
+        "语义复核：1 条 claim 需要复核",
+        "语义复核：partial — Mavic 4 Pro 在卫星定位信号不佳时的高度限制为「相对起飞点 30 m」"
+      ],
+      "tags": [
+        "limit",
+        "mavic4pro"
+      ]
+    },
+    {
+      "id": "h-m4p-4g",
+      "question": "Mavic 4 Pro 的增强图传怎么开启？",
+      "passed": true,
+      "checks": {
+        "status": true,
+        "citations": true,
+        "claims": true,
+        "numbers": true
+      },
+      "status": "ok",
+      "answer": "**结论**：Mavic 4 Pro 的增强图传有两种开启入口：点击飞行界面上的 **4G 图标**打开菜单，或进入 **系统设置 > 图传**，然后打开「增强图传」开关。前提是飞行器与遥控器已正常连接、遥控器处于联网状态，并且 OcuSync 图传已生效 [S1]。\n\n## 操作步骤（手册明确）\n1. 开启飞行器与遥控器电源，确保两者已正确连接 [S1]。\n2. 保持遥控器处于联网状态 [S1]。\n3. 进入 DJI Fly 飞行界面，通过以下任意一种方式开启增强图传 [S1]：\n   - 点击 **4G 图标**打开菜单，打开「增强图传」开关；\n   - 进入**系统设置 > 图传**，打开「增强图传」开关。\n4. 可选操作：根据当前 4G 信号质量，在「DJI 增强图传设置」菜单中切换运营商。切换过程约持续 10 秒，期间增强图传无法使用 [S1]。\n\n## 使用前提\n- 飞行器需安装 **DJI 增强图传模块 3**；如果购买的是畅飞套装或创作者套装，该模块已预装在飞行器或遥控器上，请以包装清单为准 [S2]。\n- 遥控器可通过连接手机 Wi-Fi 热点联网；**DJI RC Pro 2** 遥控器还可使用机身安装的增强图传模块联网 [S2]。\n- 该功能需要**购买增强图传服务**：首次使用默认赠送一定时长，到期后需单独购买。可在 DJI Fly App 首页「我的 > 设备管理 > 我的配件」查看有效期；若使用多个增强图传模块，服务有效期以时间较晚到期者为准 [S1]。\n- 仅部分国家和地区支持该功能及对应模块与服务，使用时请遵守当地法律法规 [S2]。\n\n## 安全策略（手册警告）\n- 必须在 **OcuSync 图传生效**的情况下才能开启增强图传；飞行中若 OcuSync 断开，不允许关闭增强图传 [S1]。\n- 在仅使用 4G 传输的场景下，重启遥控器或 DJI Fly 会导致失控返航，直到 OcuSync 恢复后 4G 图传才恢复 [S1]。\n- 在仅使用 4G 传输的场景下，飞行器落地后会启动起飞倒计时；若超时未起飞，飞行器将被限制不能起飞，直至 OcuSync 图传恢复 [S1]。\n- 开启后务必留意图传信号强度：点击图传信号图标，可查看当前 OcuSync 与 4G 图传信号强度 [S1]。\n- 通过增强图传模块使用时，请关闭遥控器 Wi-Fi 以减少干扰；通过手机热点使用时，热点频段须设为 2.4G、网络模式设为 4G，飞行中不建议用该手机接听电话或让多设备连接同一热点 [S1]。\n- 4G 传输要求：尽量选择 4G 信号接近满格处操作；OcuSync 断开后完全依赖 4G 飞行可能存在延迟与卡顿，空旷地带建议保持在 120 米以下，城市高楼环境请把返航高度设为高于楼高 [S4]。\n\n待确认：你用的是哪个遥控器（DJI RC 2 / RC Pro 2）以及是否已安装增强图传模块 3？不同组合的联网方式不同（手机热点或机身模块）[S2]。",
+      "citations": [
+        {
+          "ref": "S1",
+          "doc_id": "dji_mavic_4_pro_user_manual_v1_2_zh_cn",
+          "page": 76,
+          "title": "DJI Mavic 4 Pro 用户手册 v1.2"
+        },
+        {
+          "ref": "S2",
+          "doc_id": "dji_mavic_4_pro_user_manual_v1_2_zh_cn",
+          "page": 75,
+          "title": "DJI Mavic 4 Pro 用户手册 v1.2"
+        },
+        {
+          "ref": "S4",
+          "doc_id": "dji_mavic_4_pro_user_manual_v1_2_zh_cn",
+          "page": 77,
+          "title": "DJI Mavic 4 Pro 用户手册 v1.2"
+        }
+      ],
+      "citation_count": 3,
+      "duration_ms": 8921.9,
+      "usage": {
+        "prompt_tokens": 10613,
+        "completion_tokens": 1052,
+        "llm_calls": 2,
+        "tool_calls": 2
+      },
+      "warnings": [],
+      "tags": [
+        "transmission",
+        "mavic4pro"
+      ]
+    },
+    {
+      "id": "h-m4p-storage",
+      "question": "Mavic 4 Pro 电池长期存放要注意什么？",
+      "passed": true,
+      "checks": {
+        "status": true,
+        "citations": true,
+        "claims": true,
+        "numbers": true
+      },
+      "status": "ok",
+      "answer": "## 结论\n\nMavic 4 Pro 智能飞行电池长期存放，最核心有两条：**每隔 3 个月左右做一次充电维护**，以及**不要让电池长期处于满电、亏电或高温环境**。把它长期闲置不用，会降低电池性能，甚至造成永久损坏；如果超过 3 个月未做维护（充放电），DJI 将不予保修 [S2]。\n\n## 具体做法\n\n**1. 每 3 个月充放电一次（最重要）**\n手册原文：每隔 3 个月左右重新充电一次，以保持电池活性；如果长期闲置，可能影响电池性能，甚至导致永久损坏；超过 3 个月未进行维护（充放电）的电池不予保修 [S2]。\n\n**2. 不要让它长期满电放置**\n电池充满电后放置一段时间，会自动启动**存储自放电保护**；放电期间电池轻微发热属于正常现象 [S2]。因此，长期存放无需担心满电胀压，但**不要反复给它补满电**。\n\n**3. 绝对不要放电到 0% 后长期存放**\n切勿将电池彻底放完电后长时间存储，避免电池过放后无法继续使用 [S10]。运输场景同理，手册要求运输前放电至低电量（如 30% 以下）[S2]。\n\n**4. 存放环境**\n- 禁止将电池放在靠近热源的地方，例如阳光直射的车内 [S10]；\n- 电池严禁接触液体，也不要在潮湿环境中存放 [S10]；\n- 存放在儿童接触不到的地方 [S10]；\n- 推荐把电池放在充电管家中保存 [S8]。\n- 安全指引中给出的 **-10℃ 至 40℃** 是**使用**温度范围，不是存放温度范围 [S10]。\n\n**5. 存放前和取用前的自检**\n严禁使用鼓包、漏液、包装破损的电池；电池若坠落或受外力撞击，不得再次使用 [S10]。取用时如果发现 4 个 LED 灯同时闪烁，手册提示这表示电池损坏 [S9]。\n\n## 需要说明的两点\n\n- **待确认**：本次检索未找到 Mavic 4 Pro 手册中明确的“长期存放温度区间”和“建议存放电量百分比（如 40%~60%）”这类数值，因此不给出具体数字。如果你需要，我可以再针对“规格参数—电池”页检索一次。\n- **推断**：结合“存储自放电保护”与“禁止彻底放电后存储”两条可以推断，长期存放让电池自然停留在自放电后的中等电量即可，无需人为精确设定；但这一条是推断，不是手册原文。",
+      "citations": [
+        {
+          "ref": "S2",
+          "doc_id": "dji_mavic_4_pro_user_manual_v1_2_zh_cn",
+          "page": 49,
+          "title": "DJI Mavic 4 Pro 用户手册 v1.2"
+        },
+        {
+          "ref": "S10",
+          "doc_id": "dji_mavic_4_pro_safety_guidelines_rcpro2_v1_0",
+          "page": 4,
+          "title": "DJI Mavic 4 Pro 安全指引 v1.0"
+        },
+        {
+          "ref": "S8",
+          "doc_id": "dji_mavic_4_pro_parallel_charging_hub_user_guide_v1_0",
+          "page": 1,
+          "title": "DJI Mavic 4 Pro 用户指南 v1.0"
+        },
+        {
+          "ref": "S9",
+          "doc_id": "dji_mavic_4_pro_user_manual_v1_2_zh_cn",
+          "page": 52,
+          "title": "DJI Mavic 4 Pro 用户手册 v1.2"
+        }
+      ],
+      "citation_count": 4,
+      "duration_ms": 18532.8,
+      "usage": {
+        "prompt_tokens": 23374,
+        "completion_tokens": 1853,
+        "llm_calls": 4,
+        "tool_calls": 3
+      },
+      "warnings": [
+        "引用校验：支持度 100%，引用覆盖 86%，2 个问题",
+        "引用校验：句子包含事实性数值/主题词，但没有引用",
+        "语义复核：1 条 claim 需要复核",
+        "语义复核：partial — 电池严禁接触液体，也不要在潮湿环境中存放"
+      ],
+      "tags": [
+        "battery",
+        "storage",
+        "mavic4pro"
+      ]
+    },
+    {
+      "id": "h-mini4-return",
+      "question": "Mini 4 Pro 的返航点什么时候记录？",
+      "passed": true,
+      "checks": {
+        "status": true,
+        "citations": true,
+        "claims": true,
+        "numbers": true
+      },
+      "status": "ok",
+      "answer": "**结论：Mini 4 Pro 的返航点会在两个时刻记录，并可能刷新一次**——开机后 GNSS 首次达标时记录，起飞时若 GNSS 再次达标则重新记录（覆盖上一次）[S1]。\n\n**具体时机**\n1. **开机后首次记录**：飞行器开机后，当 GNSS 信号**首次**显示为强或较强（白色）时，将记录飞行器当前位置为返航点[S1]。\n2. **起飞时刷新**：起飞时，若 GNSS 信号**再次**达到强或较强，将**重新记录**飞行器当前位置为返航点；若 GNSS 信号不满足条件，则**不会刷新**返航点[S1]。\n3. 记录成功时，DJI Fly App 会以**语音提示**“返航点记录成功”[S1]。\n\n**需要手动更新的情况**\n飞行过程中若需要更新返航点（如用户位置发生移动等），可进入 DJI Fly App 的**系统设置 > 安全**页面手动更新返航点[S1]（该页面的返航项包含返航路线、返航高度和更新返航点）[S6]。\n\n**相关安全提示**\n- 只有记录返航点成功且定位服务良好时，触发返航后才会自动返回返航点并降落[S1]；定位服务不佳时可能无法正常返航，失控返航时若定位不佳会进入姿态模式并自动降落[S4]。\n- **精准降落**依赖“返航点仅在起飞时记录、飞行过程中未刷新”：若飞行中手动刷新过返航点，精准降落条件不成立[S2]。\n- 起飞前请先在 DJI Fly App 安全设置中设置合适的返航高度（默认 100 m）[S4]。\n\n如果你需要“起飞后就想让返航点固定为起飞点”的操作建议，请告诉我你的具体场景（例如在移动的船上、车内起飞），我再帮你确认是否适用。",
+      "citations": [
+        {
+          "ref": "S1",
+          "doc_id": "dji_mini_4_pro_user_manual_chs",
+          "page": 48,
+          "title": "DJI Mini 4 Pro 用户手册"
+        },
+        {
+          "ref": "S6",
+          "doc_id": "dji_mini_4_pro_user_manual_chs",
+          "page": 93,
+          "title": "DJI Mini 4 Pro 用户手册"
+        },
+        {
+          "ref": "S4",
+          "doc_id": "dji_mini_4_pro_user_manual_chs",
+          "page": 50,
+          "title": "DJI Mini 4 Pro 用户手册"
+        },
+        {
+          "ref": "S2",
+          "doc_id": "dji_mini_4_pro_user_manual_chs",
+          "page": 53,
+          "title": "DJI Mini 4 Pro 用户手册"
+        }
+      ],
+      "citation_count": 4,
+      "duration_ms": 9030.8,
+      "usage": {
+        "prompt_tokens": 10689,
+        "completion_tokens": 1363,
+        "llm_calls": 3,
+        "tool_calls": 2
+      },
+      "warnings": [],
+      "tags": [
+        "return",
+        "mini4pro"
+      ]
+    },
+    {
+      "id": "h-mini4-vision",
+      "question": "Mini 4 Pro 的全向视觉系统包括哪些方向？",
+      "passed": true,
+      "checks": {
+        "status": true,
+        "citations": true,
+        "claims": true,
+        "numbers": true
+      },
+      "status": "ok",
+      "answer": "**结论：Mini 4 Pro 的全向视觉系统覆盖前、后、侧（左、右）、上四个方向，共 4 个摄像头，均集中在机头；此外，它还配有下视双目视觉系统和底部三维红外传感系统。[S4][S6]**\n\n具体构成与观测范围如下：\n\n| 方向 | 精确测距范围 | 视角（FOV） |\n|---|---|---|\n| 前视 | 0.5–18 m | 水平 90°，垂直 72° [S4] |\n| 后视 | 0.5–15 m | 水平 90°，垂直 72° [S4] |\n| 侧视 | 0.5–12 m | 水平 90°，垂直 72° [S4] |\n| 上视 | 0.5–15 m | 前后 72°，左右 90° [S4] |\n| 下视（下视双目） | 0.3–12 m | 前后 106°，左右 90° [S4] |\n| 三维红外传感 | 0.1–8 m（>10% 反射率） | 前后 60°，左右 60° [S4] |\n\n补充说明：\n- 全向视觉系统位于机头，由 4 个摄像头组成；下视视觉系统位于机身底部，由 2 个摄像头组成；底部三维红外传感系统由一个三维红外激光发射器和一个三维红外激光接收器组成，用于判断障碍物距离，并作为对地高度参考 [S4]。\n- 手册明确指出，全向视觉系统具备水平全向和上方障碍物感知能力 [S4]；规格章节则将其表述为“全向双目视觉系统，辅以机身底部三维红外传感器”，其中上视的有效避障速度为飞行速度 ≤5 m/s [S6]。\n- 视觉系统在下方视觉悬停范围为 0.5–30 m [S4]。\n- 安全提醒：在运动挡（Sport）下，视觉避障功能会自动关闭，飞行器无法主动刹车和躲避障碍物 [S1]；视觉系统在光照不足（低于 15 lux 时，前后左右和上方感知会受限）以及纹理稀疏或重复、细小障碍物（例如树枝、电线）等场景下，可靠性也会下降 [S2][S6]。",
+      "citations": [
+        {
+          "ref": "S4",
+          "doc_id": "dji_mini_4_pro_user_manual_chs",
+          "page": 54,
+          "title": "DJI Mini 4 Pro 用户手册"
+        },
+        {
+          "ref": "S6",
+          "doc_id": "dji_mini_4_pro_user_manual_chs",
+          "page": 99,
+          "title": "DJI Mini 4 Pro 用户手册"
+        },
+        {
+          "ref": "S1",
+          "doc_id": "dji_mini_4_pro_user_manual_chs",
+          "page": 46,
+          "title": "DJI Mini 4 Pro 用户手册"
+        },
+        {
+          "ref": "S2",
+          "doc_id": "dji_mini_4_pro_user_manual_chs",
+          "page": 56,
+          "title": "DJI Mini 4 Pro 用户手册"
+        }
+      ],
+      "citation_count": 4,
+      "duration_ms": 5818.6,
+      "usage": {
+        "prompt_tokens": 10099,
+        "completion_tokens": 657,
+        "llm_calls": 2,
+        "tool_calls": 2
+      },
+      "warnings": [],
+      "tags": [
+        "vision",
+        "mini4pro"
+      ]
+    },
+    {
+      "id": "h-mini4-storage",
+      "question": "Mini 4 Pro 电池长期存放要注意什么？",
+      "passed": true,
+      "checks": {
+        "status": true,
+        "citations": true,
+        "claims": true,
+        "numbers": true
+      },
+      "status": "ok",
+      "answer": "**结论**：Mini 4 Pro 电池长期存放的关键是三点：电量保持中间水平（不充满也不放空），并定期补电；避开高温、热源；低温或低电量导致的休眠要提前处理。手册明确要求「每隔 3 个月左右重新充电一次以保持电池活性」[S4]。\n\n**1. 电量管理**\n- 不需要手动放电：充满后放置 3 天会自动放电至 96%；无任何操作累计放置 9 天，会放电至 60% 以保护电池（期间可能轻微发热，属正常现象）[S1]。推断：长期存放的电量最终会稳定在约 60%，这是手册设计的存放电量水平。\n- 切勿将电池彻底放完电后长时间存储，否则会进入过放状态、造成电芯损坏且无法恢复使用[S7]。\n- 非飞行状态下电量低于 10% 时，3 天后会自动进入休眠保护，再次使用前需充电退出休眠[S1]；若电量严重不足且闲置过久会进入深度睡眠模式，同样需充电唤醒[S7]。\n- 固定保养节奏：每 3 个月左右重新充电一次，保持电池活性[S4]。\n\n**2. 环境与温度**\n- 禁止将电池放在靠近热源处，如阳光直射、热天车内、火源或加热炉[S7]。\n- 电池使用温度为 −10℃ 至 40℃，温度过高可能引起着火、爆炸，温度过低会降低性能[S7]。\n- 充电环境温度为 5℃ 至 40℃，理想充电温度（22℃ 至 28℃）可大幅延长寿命[S7]；用户手册给出的最佳充电温度是 25±3℃[S4]。\n- 待确认：本次检索未找到 Mini 4 Pro 手册中单独的「存储温度范围」数值条款，只有上述使用与充电温度范围。如需精确存放温度，建议查电池表面贴纸或安全概要原文。\n\n**3. 安全注意事项（保留手册警告语义）**\n- 禁止以任何方式插接或用尖利物体刺破电池；电池若坠落或受外力撞击，不得再次使用；请存放在儿童接触不到的地方[S7]。\n- 电池内液体有强腐蚀性，泄漏请远离；接触皮肤或眼睛立即用大量清水冲洗并就医；起火时按「水或水雾、沙、灭火毯、干粉、二氧化碳灭火器」顺序灭火[S7]。\n- 若需运输电池，出于安全需保持低电量，运输前放电至低电量（如 30% 以下）[S4]。\n\n**4. 存放后重新启用**\n- 取出后若 App 出现电池保养提示（电芯压差过大），按提示将电池充满电后静置 48 小时；两次保养均未成功请联系 DJI 售后服务[S1]。\n- 每次使用前务必充满电[S4]。",
+      "citations": [
+        {
+          "ref": "S4",
+          "doc_id": "dji_mini_4_pro_user_manual_chs",
+          "page": 62,
+          "title": "DJI Mini 4 Pro 用户手册"
+        },
+        {
+          "ref": "S1",
+          "doc_id": "dji_mini_4_pro_user_manual_chs",
+          "page": 60,
+          "title": "DJI Mini 4 Pro 用户手册"
+        },
+        {
+          "ref": "S7",
+          "doc_id": "dji_mini_4_pro_dji_rc_n2_safety_guidelines_5",
+          "page": 2,
+          "title": "DJI Mini 4 Pro 安全指引"
+        }
+      ],
+      "citation_count": 3,
+      "duration_ms": 15191.3,
+      "usage": {
+        "prompt_tokens": 23658,
+        "completion_tokens": 2088,
+        "llm_calls": 4,
+        "tool_calls": 3
+      },
+      "warnings": [
+        "引用校验：支持度 100%，引用覆盖 93%，1 个问题",
+        "引用校验：句子包含事实性数值/主题词，但没有引用",
+        "语义复核：2 条 claim 需要复核",
+        "语义复核：partial — 长期存放的电量最终会稳定在约 60%，这是手册设计的存放电量水平",
+        "语义复核：partial — 本次检索未找到 Mini 4 Pro 手册中单独的「存储温度范围」数值条款"
+      ],
+      "tags": [
+        "battery",
+        "storage",
+        "mini4pro"
+      ]
+    },
+    {
+      "id": "h-air3s-charging",
+      "question": "Air 3S 的充电管家能给几块电池充电？",
+      "passed": false,
+      "checks": {
+        "status": true,
+        "citations": true,
+        "claims": false,
+        "numbers": false
+      },
+      "status": "ok",
+      "answer": "**结论：DJI Air 3S 的充电管家最多可为 3 块智能飞行电池充电** [S2]。\n\n细节：\n\n- 充电时，把电池插入充电管家的电池接口，再用充电器把充电管家连接到交流电源；充电管家会按电量从高到低，依次为电池充电 [S1]。\n- 充电完成后，电池可以留在充电管家中保存 [S1]。\n- 充电管家还支持通过 USB-C 接口为遥控器、手机等外部设备供电：这时电池会按剩余电量由低到高依次对外放电；如果电池剩余电量少于 7%，就无法为外部设备供电 [S1][S2]。\n- 它还支持「集电」功能：把多块低电量电池的剩余电量，集中到剩余电量最高的那块电池中 [S2]。\n- 手册提示：充电管家只适用于为指定型号的智能飞行电池充电，请勿用它为其他型号的电池充电；使用时请平稳放置，并注意绝缘与防火，也不要用手或其它物体触碰金属端子 [S2]。\n\n如果你想了解充电管家装满 3 块电池大约需要多久，或者想了解「集电」功能的完整操作步骤，可以告诉我，我可以继续查手册。",
+      "citations": [
+        {
+          "ref": "S2",
+          "doc_id": "dji_air_3s_user_manual_v1_0_zh_cn",
+          "page": 51,
+          "title": "DJI Air 3S 用户手册 v1.0"
+        },
+        {
+          "ref": "S1",
+          "doc_id": "dji_air_3s_user_manual_v1_0_zh_cn",
+          "page": 52,
+          "title": "DJI Air 3S 用户手册 v1.0"
+        }
+      ],
+      "citation_count": 2,
+      "duration_ms": 7160.0,
+      "usage": {
+        "prompt_tokens": 9222,
+        "completion_tokens": 987,
+        "llm_calls": 3,
+        "tool_calls": 2
+      },
+      "warnings": [],
+      "tags": [
+        "charging",
+        "air3s"
+      ]
+    },
+    {
+      "id": "h-air3s-limit",
+      "question": "Air 3S 在卫星信号不佳时的高度限制是多少？",
+      "passed": true,
+      "checks": {
+        "status": true,
+        "citations": true,
+        "claims": true,
+        "numbers": true
+      },
+      "status": "ok",
+      "answer": "**结论：Air 3S 在卫星定位信号不佳时，限飞高度为相对起飞点 30 m（环境光线正常时）；环境光线过暗且底部三维红外传感系统生效时，限飞高度降为相对地面 3 m [S1]。此时最远距离不受限制，App 也不会给出提示 [S1]。**\n\n需要结合手册的几条细则一起看：\n\n- **限高触发条件**：卫星定位有效时，限飞区限制与高度/距离限制共同作用；否则飞行器「仅受高度限制」，也就是只受上面这条高度限制约束 [S2]。\n- **光线过暗的情况**：环境光线过暗且三维红外传感系统生效时，限飞高度为相对地面 3 m [S1]。手册同一段还有一句「……统失效时，限飞高度为相对起飞点高度 30 m」，原文在此处断行、字符有缺失，**推断**指的是三维红外传感系统失效时恢复为相对起飞点 30 m [S1]。\n- **限制会被自动解除**：每次开机过程中，只要出现过一次卫星定位信号等级 ≥ 2，限飞高度限制即自动解除；此后卫星信号再次变弱也不受高度限制 [S1]。\n- **不要靠\"冲出范围\"来突破**：飞行器因惯性冲出设定飞行范围后，遥控器仍有控制权，但无法再让它飞得更远 [S1]。\n\n安全提醒（保留手册原意）：卫星信号差且不满足视觉定位条件时，飞行器会进入姿态（ATTI）模式，水平方向漂移、无法定点悬停和自主刹车，应尽快降落到安全位置；应尽量避免在卫星信号差或狭窄空间飞行 [S6]。\n\n另需注意一个容易混淆的\"30 m\"：未连接/未登录 App，或中国大陆用户未完成实名登记绑定时，也会被限高 30 m、限远 50 m [S7]。如果你的场景是\"信号差 + 30 m\"，可以先排除这一条。\n\n如果你能补充具体场景（白天/夜间、是否在限飞区、App 内设置的最大高度），我可以进一步判断哪种限制在起作用。",
+      "citations": [
+        {
+          "ref": "S1",
+          "doc_id": "dji_air_3s_user_manual_v1_0_zh_cn",
+          "page": 18,
+          "title": "DJI Air 3S 用户手册 v1.0"
+        },
+        {
+          "ref": "S2",
+          "doc_id": "dji_air_3s_user_manual_v1_0_zh_cn",
+          "page": 17,
+          "title": "DJI Air 3S 用户手册 v1.0"
+        },
+        {
+          "ref": "S6",
+          "doc_id": "dji_air_3s_user_manual_v1_0_zh_cn",
+          "page": 36,
+          "title": "DJI Air 3S 用户手册 v1.0"
+        },
+        {
+          "ref": "S7",
+          "doc_id": "dji_air_3s_user_manual_v1_0_zh_cn",
+          "page": 4,
+          "title": "DJI Air 3S 用户手册 v1.0"
+        }
+      ],
+      "citation_count": 4,
+      "duration_ms": 10131.8,
+      "usage": {
+        "prompt_tokens": 29111,
+        "completion_tokens": 1186,
+        "llm_calls": 4,
+        "tool_calls": 4
+      },
+      "warnings": [
+        "引用校验：支持度 100%，引用覆盖 82%，2 个问题",
+        "引用校验：句子包含事实性数值/主题词，但没有引用"
+      ],
+      "tags": [
+        "limit",
+        "air3s"
+      ]
+    },
+    {
+      "id": "h-air3s-firmware",
+      "question": "Air 3S 怎么用 DJI Assistant 2 升级固件？",
+      "passed": true,
+      "checks": {
+        "status": true,
+        "citations": true,
+        "claims": true,
+        "numbers": true
+      },
+      "status": "ok",
+      "answer": "## 结论\n\nAir 3S 支持用 **DJI Assistant 2（消费机系列）调参软件**升级，需要**分别升级飞行器和遥控器** [S1]。\n\n## 升级步骤\n\n1. 开启设备，用 USB-C 连接线把设备的 USB-C 接口连到电脑 [S1]\n2. 启动 DJI Assistant 2（消费机系列），用 DJI 账号登录并进入主界面 [S1]\n3. 点击设备图标，再点击左侧的「固件升级」选项 [S1]\n4. 选择并确认需要升级的固件版本 [S1]\n5. 调参软件会自动下载并升级固件，等待升级完成即可 [S1]\n\n## 手册列出的注意事项（请务必遵守）\n\n- 飞行器固件中包含**智能飞行电池固件**，务必确保对所有电池都进行升级 [S1]\n- 需要按步骤升级，否则可能导致升级失败 [S1]\n- 整个升级过程中，电脑必须能够访问互联网 [S1]\n- 升级过程中请勿插拔 USB 数据线 [S1]\n- 升级时飞行器电量至少在 **40%** 以上，遥控器电量至少在 **20%** 以上 [S1]\n- 整个升级过程约 **10 分钟**；期间出现云台无力、状态指示灯异常闪烁或飞行器自行重启，均属正常现象，请耐心等待 [S1]\n\n## 升级结果如何判断（以遥控器指示灯为例）\n\n- 蓝灯常亮：固件升级成功 [S3]\n- 黄灯常亮：固件升级失败 [S3]\n\n若升级失败，手册建议重启飞行器，并重启 DJI Fly App 或 DJI Assistant 2（消费机系列）后重新升级 [S4]。\n\n补充：手册也提供了用 DJI Fly App 升级的方式，需先连接飞行器与遥控器（未连接无法升级），且升级时需联网 [S1]；各版本固件更新内容可查阅《发布记录》[S2]。",
+      "citations": [
+        {
+          "ref": "S1",
+          "doc_id": "dji_air_3s_user_manual_v1_0_zh_cn",
+          "page": 69,
+          "title": "DJI Air 3S 用户手册 v1.0"
+        },
+        {
+          "ref": "S3",
+          "doc_id": "dji_air_3s_user_manual_v1_0_zh_cn",
+          "page": 61,
+          "title": "DJI Air 3S 用户手册 v1.0"
+        },
+        {
+          "ref": "S4",
+          "doc_id": "dji_air_3s_release_notes_cn",
+          "page": 3,
+          "title": "DJI Air 3S 发布说明"
+        },
+        {
+          "ref": "S2",
+          "doc_id": "dji_air_3s_user_manual_v1_0_zh_cn",
+          "page": 70,
+          "title": "DJI Air 3S 用户手册 v1.0"
+        }
+      ],
+      "citation_count": 4,
+      "duration_ms": 5869.7,
+      "usage": {
+        "prompt_tokens": 10194,
+        "completion_tokens": 1292,
+        "llm_calls": 3,
+        "tool_calls": 2
+      },
+      "warnings": [],
+      "tags": [
+        "firmware",
+        "air3s"
+      ]
+    },
+    {
+      "id": "h-mini5-return",
+      "question": "Mini 5 Pro 什么时候记录返航点？",
+      "passed": true,
+      "checks": {
+        "status": true,
+        "citations": true,
+        "claims": true,
+        "numbers": true
+      },
+      "status": "ok",
+      "answer": "## 结论\n\n**Mini 5 Pro 在起飞时记录返航点**。只要卫星定位信号良好或环境光线良好，飞行器就在起飞瞬间把当前位置记为返航点，DJI Fly App 会用语音提示“返航点记录成功”[S1]。手册在飞行安全章节也提到，起飞后要确认听到“返航点已刷新”的语音提示，再继续飞行[S8]。\n\n## 关于返航点之后更新\n\n返航点记录后并非固定不改，具体情况分为以下几类：\n\n| 场景 | 返航点行为 |\n|---|---|\n| 默认 | 只在起飞时记录一次；之后的飞行中，飞行器不会自动刷新返航点[S2] |\n| 手动更新 | 飞行过程中，如果用户位置发生移动等情况，可以在 DJI Fly App 中依次点击“> 安全”，手动更新返航点[S1] |\n| 动态返航点 | 搭配 DJI RC 2 遥控器时，如果遥控器卫星定位良好，开启“更新返航点”中的“动态返航点”后，返航点会持续刷新为遥控器位置；开启后返航图标显示为蓝色[S2] |\n\n## 两个实用提示\n\n- **精准降落到起飞点需要在“仅在起飞时记录返航点、飞行中未刷新返航点”的前提下才成立**；另外还要求垂直起飞后垂直上升至少 7 m 再水平飞行、地面环境未发生动态变化、地面纹理丰富、光线明暗合适[S2]。\n- **返航点可能失效**：在飞行器飞到卫星定位良好的位置之前，如果进入姿态模式，返航点将失效[S6]；若返航点刷新在解禁区域外，飞行器也无法顺利返航[S8]。\n\n需要我进一步查某个具体细节吗？例如手动更新返航点的完整菜单路径，或动态返航点在遥控器信号弱时的表现。",
+      "citations": [
+        {
+          "ref": "S1",
+          "doc_id": "dji_mini_5_pro_user_manual_zh_cn",
+          "page": 37,
+          "title": "DJI Mini 5 Pro 用户手册"
+        },
+        {
+          "ref": "S8",
+          "doc_id": "dji_mini_5_pro_user_manual_zh_cn",
+          "page": 19,
+          "title": "DJI Mini 5 Pro 用户手册"
+        },
+        {
+          "ref": "S2",
+          "doc_id": "dji_mini_5_pro_user_manual_zh_cn",
+          "page": 42,
+          "title": "DJI Mini 5 Pro 用户手册"
+        },
+        {
+          "ref": "S6",
+          "doc_id": "dji_mini_5_pro_user_manual_zh_cn",
+          "page": 40,
+          "title": "DJI Mini 5 Pro 用户手册"
+        }
+      ],
+      "citation_count": 4,
+      "duration_ms": 10514.5,
+      "usage": {
+        "prompt_tokens": 14191,
+        "completion_tokens": 1389,
+        "llm_calls": 3,
+        "tool_calls": 2
+      },
+      "warnings": [
+        "引用校验：支持度 100%，引用覆盖 64%，4 个问题",
+        "引用校验：句子包含事实性数值/主题词，但没有引用",
+        "语义复核：1 条 claim 需要复核",
+        "语义复核：partial — 默认只在起飞时记录一次；之后的飞行中，飞行器不会自动刷新返航点"
+      ],
+      "tags": [
+        "return",
+        "mini5pro"
+      ]
+    },
+    {
+      "id": "h-mini5-vision",
+      "question": "Mini 5 Pro 的视觉定位最佳高度范围是多少？",
+      "passed": true,
+      "checks": {
+        "status": true,
+        "citations": true,
+        "claims": true,
+        "numbers": true
+      },
+      "status": "ok",
+      "answer": "## 结论\n\n**Mini 5 Pro 视觉定位系统的最佳工作高度范围是 0.5–30 m**（在无卫星定位、开阔平坦场地使用视觉系统的条件下）[S1]。\n\n## 细节与前提\n\n- 这一范围的前提是**无卫星定位（GNSS）**且场地开阔平坦；超出 0.5–30 m 范围飞行时，视觉定位性能可能下降，需谨慎飞行 [S1]。\n- 视觉定位功能会在**无卫星定位信号或信号欠佳**的环境中自动开启 [S3]。\n- 视觉定位会受光照影响：环境光线不足时，即使开启补光灯也无法达到最佳性能，此时若卫星定位信号不佳，请谨慎飞行 [S1]。\n- 下视视觉系统配备补光灯辅助：起飞后环境光线不足且飞行高度在 **5 m 以下**时，补光灯默认自动开启 [S3]。\n- 视觉定位无法正常工作的典型场景包括：纯色/强反光/水面/透明表面、运动物体表面、光照 <1 lux 或 >40,000 lux、纹理稀疏或重复度高的表面、细小障碍物（树枝、电线）等 [S1]。请勿在雨雾或能见度低于 100 m 的场景飞行 [S1]。\n\n⚠️ 安全提示：感知系统只在有限条件下起辅助作用，不能代替人的判断和操控，飞行中应全程保持对飞行器的控制 [S1]。\n\n**待确认**：以上是手册中「视觉定位系统」的通用最佳高度区间；若你问的是某一具体功能（如返航、跟随、精准降落）的高度上限，需说明具体场景，我再针对性检索。另外，低电量返航条款中提到「对地高度应大于 2 m 且小于 30 m」[S2]，那是返航场景的要求，与视觉定位区间不是同一件事，请勿混用。",
+      "citations": [
+        {
+          "ref": "S1",
+          "doc_id": "dji_mini_5_pro_user_manual_zh_cn",
+          "page": 44,
+          "title": "DJI Mini 5 Pro 用户手册"
+        },
+        {
+          "ref": "S3",
+          "doc_id": "dji_mini_5_pro_user_manual_zh_cn",
+          "page": 43,
+          "title": "DJI Mini 5 Pro 用户手册"
+        },
+        {
+          "ref": "S2",
+          "doc_id": "dji_mini_5_pro_user_manual_zh_cn",
+          "page": 40,
+          "title": "DJI Mini 5 Pro 用户手册"
+        }
+      ],
+      "citation_count": 3,
+      "duration_ms": 6317.4,
+      "usage": {
+        "prompt_tokens": 9855,
+        "completion_tokens": 761,
+        "llm_calls": 2,
+        "tool_calls": 2
+      },
+      "warnings": [],
+      "tags": [
+        "vision",
+        "mini5pro"
+      ]
+    },
+    {
+      "id": "h-neo2-vision",
+      "question": "Neo 2 的感知系统由哪些部分组成？",
+      "passed": true,
+      "checks": {
+        "status": true,
+        "citations": true,
+        "claims": true,
+        "numbers": true
+      },
+      "status": "ok",
+      "answer": "## 结论\n\nDJI Neo 2 的感知系统由**三部分**组成 [S1]：\n\n| 序号 | 组成 | 感知能力 |\n|---|---|---|\n| 1 | 全向单目视觉系统 | 水平全向 + 上方障碍物感知 [S5] |\n| 2 | 前视激光雷达 | 感知前方障碍物 [S1] |\n| 3 | 下视红外传感系统 | 下视方向感知 [S5] |\n\n前视激光雷达发射器符合 Class 1 人眼安全要求 [S1]。\n\n## 关键工作条件（手册明确）\n\n- 前视雷达只负责**前方**障碍物；全向单目视觉适用于光照良好、障碍物纹理不特别稀疏的环境 [S1]。\n- 在 DJI Fly App 中把避障行为设为「绕行」或「刹停」时，全向单目视觉系统会在**普通挡或平稳挡**中自动开启 [S1]。\n- 视觉定位功能在无卫星定位信号或卫星定位信号欠佳时自动开启 [S1]。\n- 运动挡、手动挡飞行时避障功能自动关闭 [S10]；开启花式飞行后飞行器也会关闭避障功能，关闭花式飞行后避障自动恢复 [S8]。\n\n## 注意事项（保留手册警告语义）\n\n- 感知系统只在有限条件下起安全辅助作用，**不能代替人的判断和操控**，飞行全程需保持对飞行器的控制 [S1]。\n- 可在系统设置中关闭视觉定位与避障；关闭后飞行器只能依靠卫星定位悬停，全向避障失效，下降到地面附近不会主动减速，请谨慎关闭 [S1]。\n- 该关闭仅在手动打杆飞行时生效，自动返航、自动降落等自动模式不生效；重启飞行器后默认恢复开启 [S1]。\n- 无卫星定位时，视觉定位系统最佳工作高度为 0.5–10 m，超出该范围性能可能下降 [S1]。\n- 视觉系统在水面可能无法正常工作，降落功能触发时可能无法主动回避下方水域 [S1]。\n- 前视激光雷达不能识别反射率小于 10%、玻璃等反光障碍物；视觉系统也无法识别纯色表面、反光/倒影表面、水面或透明物、运动物体表面、细小障碍物（围栏、树枝、电线）等 [S2]。\n- 请勿遮挡或干扰感知系统；起飞前需清洁表面玻璃（用无尘布，不可用酒精等有机溶剂），若玻璃有掉落、破碎、划痕请返厂维修 [S2]。\n\n以上内容来自 DJI Neo 2 用户手册 v1.2 第 60–61 页「4.4 感知系统」及第 17 页「1.2 部件名称」。",
+      "citations": [
+        {
+          "ref": "S1",
+          "doc_id": "dji_neo_2_user_manual_v1_2_zh_cn",
+          "page": 60,
+          "title": "DJI Neo 2 用户手册 v1.2"
+        },
+        {
+          "ref": "S5",
+          "doc_id": "dji_neo_2_user_manual_v1_2_zh_cn",
+          "page": 17,
+          "title": "DJI Neo 2 用户手册 v1.2"
+        },
+        {
+          "ref": "S10",
+          "doc_id": "dji_neo_2_user_manual_v1_2_zh_cn",
+          "page": 52,
+          "title": "DJI Neo 2 用户手册 v1.2"
+        },
+        {
+          "ref": "S8",
+          "doc_id": "dji_neo_2_user_manual_v1_2_zh_cn",
+          "page": 47,
+          "title": "DJI Neo 2 用户手册 v1.2"
+        },
+        {
+          "ref": "S2",
+          "doc_id": "dji_neo_2_user_manual_v1_2_zh_cn",
+          "page": 61,
+          "title": "DJI Neo 2 用户手册 v1.2"
+        }
+      ],
+      "citation_count": 5,
+      "duration_ms": 8495.5,
+      "usage": {
+        "prompt_tokens": 10129,
+        "completion_tokens": 891,
+        "llm_calls": 2,
+        "tool_calls": 2
+      },
+      "warnings": [
+        "引用校验：支持度 100%，引用覆盖 94%，1 个问题",
+        "引用校验：句子包含事实性数值/主题词，但没有引用"
+      ],
+      "tags": [
+        "vision",
+        "neo2"
+      ]
+    },
+    {
+      "id": "h-m30-storage",
+      "question": "Matrice 30 电池长期存放建议电量是多少？",
+      "passed": true,
+      "checks": {
+        "status": true,
+        "citations": true,
+        "claims": true,
+        "numbers": true
+      },
+      "status": "ok",
+      "answer": "**结论：Matrice 30 的 TB30 智能飞行电池长期存放时，建议把电量保持在 50%。**手册推荐使用 BS30 电池箱的「存储模式」，把电池充至 50% 后再存放 [S7][S9]。\n\n细节与注意事项：\n\n**1. 为什么是 50%**\n- 合适的存储电量可以延长电池寿命；电量低于 50% 时，可参考最大存储天数：50% 对应 260 天，40% 对应 210 天，30% 对应 160 天，20% 对应 110 天，低于 15% 则更短 [S7][S9]。\n- 手册警告：**一旦超过最大存储天数，电池将会损坏、无法使用**；不同生产批次与存储环境的数据会略有差异 [S7][S9]。\n\n**2. 电池的自放电机制（推断：可作为长期存放的辅助手段，但不能替代主动充到 50%）**\n- 当电量大于 50% 时，电池会触发自放电功能，自动放电至 50%，以延长寿命；自放电的启动时间可在 DJI Pilot 2 App 中设置为 0–9 天 [S7][S3]。\n\n**3. 长期存放期间的保养要求**\n- 若长期闲置电池，会影响其性能 [S7]。\n- 建议每 50 次循环、每三个月，或 DJI Pilot 2 App 提示时做一次电池保养：充电至 100% → 静置 24 小时 → 放电至 20% 以下 → 静置 1 小时；完成后即可充电至满电使用，或充至存储电量存放 [S7][S6][S9]。\n- 保养时同时建议检查：在 DJI Pilot 2 中查看电芯压差是否小于 0.1 V、固件是否最新；电池有无鼓包、漏液、破损；接口有无污损 [S8]。\n\n**4. 相关安全提示（手册原意保留）**\n- 环境温度高于 60℃ 时使用或存储电池有胀气鼓包风险，可能导致起火甚至爆炸 [S2]。\n- 高电量存储影响锂电池寿命：12 个月内，若 90%（含）以上电量的存储时间少于 120 天，TB30 电池循环可达 400 次；这也是保修条件之一（12 个月且循环少于 400 次且 ≥90% 电量存储累计少于 120 天）[S1][S4]。\n- 为保证运输安全，切勿运输电量高于 30% 的电池 [S9]。\n\n需要提醒：以上都是 M30 系列（TB30 电池）的值；如果你用的是 M30T 或 M30 EU 版本，电池型号相同，但具体版本差异建议确认你的手册版本（当前引用包含《用户手册 v2.2》《安全指引 v2.0》与《保养手册 v1.0》）。",
+      "citations": [
+        {
+          "ref": "S7",
+          "doc_id": "matrice30_series_user_manual_v2_2_chsi",
+          "page": 78,
+          "title": "DJI Matrice 30 用户手册 v2.2"
+        },
+        {
+          "ref": "S9",
+          "doc_id": "matrice30_series_intelligent_flight_battery_safety_guidelines_v2_0",
+          "page": 6,
+          "title": "DJI Matrice 30 安全指引 v2.0"
+        },
+        {
+          "ref": "S3",
+          "doc_id": "matrice30_series_user_manual_v2_2_chsi",
+          "page": 75,
+          "title": "DJI Matrice 30 用户手册 v2.2"
+        },
+        {
+          "ref": "S6",
+          "doc_id": "matrice30_series_maintenance_manual_v1_0_chs08",
+          "page": 11,
+          "title": "DJI Matrice 30 文档 v1.0"
+        },
+        {
+          "ref": "S8",
+          "doc_id": "matrice30_series_user_manual_v2_2_chsi",
+          "page": 79,
+          "title": "DJI Matrice 30 用户手册 v2.2"
+        },
+        {
+          "ref": "S2",
+          "doc_id": "matrice30_series_intelligent_flight_battery_safety_guidelines_v2_0",
+          "page": 5,
+          "title": "DJI Matrice 30 安全指引 v2.0"
+        },
+        {
+          "ref": "S1",
+          "doc_id": "matrice30_series_disclaimer_and_safety_guidelines_v2_0",
+          "page": 17,
+          "title": "DJI Matrice 30 安全指引 v2.0"
+        },
+        {
+          "ref": "S4",
+          "doc_id": "matrice30_series_maintenance_manual_v1_0_chs08",
+          "page": 18,
+          "title": "DJI Matrice 30 文档 v1.0"
+        }
+      ],
+      "citation_count": 8,
+      "duration_ms": 10349.1,
+      "usage": {
+        "prompt_tokens": 17090,
+        "completion_tokens": 1496,
+        "llm_calls": 3,
+        "tool_calls": 2
+      },
+      "warnings": [
+        "引用校验：支持度 90%，引用覆盖 91%，2 个问题",
+        "引用校验：数值未出现在被引片段中：110天, 160天, 210天, 260天",
+        "引用校验：句子包含事实性数值/主题词，但没有引用"
+      ],
+      "tags": [
+        "battery",
+        "storage",
+        "matrice30"
+      ]
+    },
+    {
+      "id": "h-m30-dimensions",
+      "question": "Matrice 30 展开后的尺寸和重量是多少？",
+      "passed": true,
+      "checks": {
+        "status": true,
+        "citations": true,
+        "claims": true,
+        "numbers": true
+      },
+      "status": "ok",
+      "answer": "**Matrice 30 展开尺寸：470×585×215 mm（长×宽×高，不含桨叶）；重量（含两块电池）：3770 ± 10 g** [S1]。\n\n补充几个常一起用的参数（同样出自 M30 用户手册 v2.2 技术规格表）：\n\n| 项目 | 数值 |\n|---|---|\n| 尺寸（展开，不包含桨叶） | 470×585×215 mm（L×W×H） [S1] |\n| 尺寸（折叠） | 365×215×195 mm [S1] |\n| 对角线电机轴距 | 668 mm [S1] |\n| 重量（含两块电池） | 3770 ± 10 g [S1] |\n| 最大起飞重量 | 4069 g（欧盟 C2 认证为 3998 g） [S1] |\n\n注意：手册标注的展开尺寸明确为**不包含桨叶**，所以装机臂但不含桨叶时的实际占位会略大于该数值；若要算装箱/运输空间，请以折叠尺寸 365×215×195 mm 为准 [S1]。\n\n如需 TB30 电池单块重量或电池箱尺寸（如打包运输用），可以再问，我帮你查。",
+      "citations": [
+        {
+          "ref": "S1",
+          "doc_id": "matrice30_series_user_manual_v2_2_chsi",
+          "page": 118,
+          "title": "DJI Matrice 30 用户手册 v2.2"
+        }
+      ],
+      "citation_count": 1,
+      "duration_ms": 3572.8,
+      "usage": {
+        "prompt_tokens": 10424,
+        "completion_tokens": 519,
+        "llm_calls": 2,
+        "tool_calls": 2
+      },
+      "warnings": [
+        "引用校验：支持度 100%，引用覆盖 78%，2 个问题",
+        "引用校验：句子包含事实性数值/主题词，但没有引用"
+      ],
+      "tags": [
+        "spec",
+        "matrice30"
+      ]
+    },
+    {
+      "id": "h-m3p-vision",
+      "question": "Mavic 3 Pro 的视觉系统包括哪些部分？",
+      "passed": true,
+      "checks": {
+        "status": true,
+        "citations": true,
+        "claims": true,
+        "numbers": true
+      },
+      "status": "ok",
+      "answer": "**Mavic 3 Pro 的视觉系统由三部分组成：上视和下视双目视觉系统、水平全向（前、后、侧）视觉系统以及底部红外传感系统**，另外机身底部的**补光灯**用来辅助下视视觉系统 [S5]。手册的规格页把这一组合概括为“全向双目视觉系统，辅以机身底部红外传感器” [S6]。\n\n**各部分的构成与位置**\n- **上视、下视双目视觉系统**：分别位于机身上方和机底，各由两个摄像头组成 [S5]。\n- **水平全向视觉系统**：位于机头和机尾，由四个摄像头组成，覆盖前、后、侧方向 [S5]。\n- **底部红外传感系统**：由一个红外传感器模组（一发一收）组成；它可以判断障碍物距离，也能为飞行器提供对地高度参考，并配合下视双目视觉系统计算飞行器位置信息 [S5]。\n- **补光灯**：位于机身底部，在环境光线不足且飞行高度在 5 m 以下时默认自动开启，也可以在 DJI Fly App 中手动开关；每次重启飞行器后，补光灯会恢复为自动模式 [S5]。\n\n**各方向精确测距范围与视角** [S5]\n| 方向 | 精确测距范围 | FOV |\n|---|---|---|\n| 前 | 0.5–20 m | 水平 90°，垂直 103° |\n| 后 | 0.5–16 m | 水平 90°，垂直 103° |\n| 侧 | 0.5–25 m | 水平 90°，垂直 85° |\n| 上 | 0.2–10 m | 前后 100°，左右 90° |\n| 下 | 0.3–18 m | 前后 130°，左右 160° |\n\n精确悬停范围为 0.5–30 m [S5]。\n\n**使用要点**\n- 下视视觉定位在无 GNSS 或 GNSS 信号欠佳时用于定位，在普通挡或平稳挡中自动开启；上视、水平全向视觉系统在普通挡或平稳挡中自动开启，但需要在 DJI Fly App 中把避障行为选择为“绕行”或“刹停” [S4]。\n- 使用**运动（Sport）挡时，视觉避障功能自动关闭**，飞行器无法主动刹车和躲避障碍物 [S1]。\n- 在光照特别暗（小于 15 lux）或特别亮（大于 40,000 lux）的环境、纯色或强反光表面、水面或透明物体、纹理稀疏或重复的表面，以及细小障碍物（如树枝、电线）等场景，视觉系统无法正常工作 [S4]。视觉系统与红外传感系统只是在有限条件下提供安全辅助，不能代替人的判断和操控，飞行时仍需全程保持对飞行器的控制 [S4]。",
+      "citations": [
+        {
+          "ref": "S5",
+          "doc_id": "dji_mavic_3_pro_user_manual_chs",
+          "page": 49,
+          "title": "DJI Mavic 3 Pro 用户手册"
+        },
+        {
+          "ref": "S6",
+          "doc_id": "dji_mavic_3_pro_user_manual_chs",
+          "page": 102,
+          "title": "DJI Mavic 3 Pro 用户手册"
+        },
+        {
+          "ref": "S4",
+          "doc_id": "dji_mavic_3_pro_user_manual_chs",
+          "page": 50,
+          "title": "DJI Mavic 3 Pro 用户手册"
+        },
+        {
+          "ref": "S1",
+          "doc_id": "dji_mavic_3_pro_user_manual_chs",
+          "page": 41,
+          "title": "DJI Mavic 3 Pro 用户手册"
+        }
+      ],
+      "citation_count": 4,
+      "duration_ms": 4466.1,
+      "usage": {
+        "prompt_tokens": 9731,
+        "completion_tokens": 781,
+        "llm_calls": 2,
+        "tool_calls": 2
+      },
+      "warnings": [
+        "引用校验：支持度 100%，引用覆盖 71%，5 个问题",
+        "引用校验：句子包含事实性数值/主题词，但没有引用"
+      ],
+      "tags": [
+        "vision",
+        "mavic3pro"
+      ]
+    },
+    {
+      "id": "h-rc2-compass",
+      "question": "RC 2 遥控器的指南针怎么校准？",
+      "passed": true,
+      "checks": {
+        "status": true,
+        "citations": true,
+        "claims": true,
+        "numbers": true
+      },
+      "status": "ok",
+      "answer": "## 结论\n\nDJI RC 2 遥控器的指南针校准，需要进入**快捷面板 → 系统设置 → 指南针 → 指南针校准**，然后按屏幕动画翻转遥控器；屏幕提示“校准成功”就完成了。整个操作在遥控器上完成，不需要连接 App 操作。\n\n**手册明确**（DJI RC 2 用户手册 v1.0，第20页）[S1]：\n\n1. 开启遥控器，进入快捷面板界面。\n2. 选择系统设置，在菜单中选择**指南针**，点击进入**指南针校准**。\n3. 根据屏幕动画提示，翻转遥控器。\n4. 屏幕提示“校准成功”，则遥控器指南针校准成功。\n\n## 什么时候需要校准\n\n- 在**强干扰或磁场区域**使用遥控器时，可能出现遥控器指南针需要校准的情况，此时**请按照系统提示进行校准**；其他情况下，也可以按照上面步骤主动校准 [S1]。\n- 推断：如果遥控器指南针状态正常、App 或遥控器没有提示校准，这通常说明不需要额外操作；但手册没有说明校准频率，也没有规定“每隔多久必须校准”，这部分本次检索未找到。\n\n## 待确认\n\n你问的是**遥控器（RC 2）自身的指南针**，还是**飞行器机身的指南针**？两者的校准入口和操作方式在手册中属于不同章节，本次检索只找到 RC 2 遥控器指南针这一节 [S1][S2]。如果你要校准的是飞行器指南针，请告诉我具体机型（如 Mini 4 Pro、Air 3S 等），我再帮你查对应步骤。",
+      "citations": [
+        {
+          "ref": "S1",
+          "doc_id": "dji_rc_2_user_manual_v1_0_chs",
+          "page": 20,
+          "title": "DJI RC 2 用户手册 v1.0"
+        },
+        {
+          "ref": "S2",
+          "doc_id": "dji_rc_2_user_manual_v1_0_chs",
+          "page": 4,
+          "title": "DJI RC 2 用户手册 v1.0"
+        }
+      ],
+      "citation_count": 2,
+      "duration_ms": 5551.3,
+      "usage": {
+        "prompt_tokens": 11828,
+        "completion_tokens": 795,
+        "llm_calls": 3,
+        "tool_calls": 3
+      },
+      "warnings": [
+        "引用校验：支持度 100%，引用覆盖 50%，3 个问题",
+        "引用校验：句子包含事实性数值/主题词，但没有引用"
+      ],
+      "tags": [
+        "compass",
+        "rc2"
+      ]
+    },
+    {
+      "id": "h-rc2-charging",
+      "question": "RC 2 遥控器的电池续航和充电时间是多少？",
+      "passed": true,
+      "checks": {
+        "status": true,
+        "citations": true,
+        "claims": true,
+        "numbers": true
+      },
+      "status": "ok",
+      "answer": "**DJI RC 2 遥控器：最长续航约 3 小时，充电时间约 1.5 小时**（手册机型型号 RC331）[S1]。\n\n**续航**\n- 规格参数表标注「最长续航时间：3 小时」[S1]；简介章节写作「最长工作时间约 3 小时」[S2]。\n- 测试条件：在 25℃ 实验室环境下，DJI RC 2 连接 DJI Air 3 飞行器正常飞行并开启 1080p/60fps 录像时测得，仅供参考 [S2]。**实际续航会随使用方式、环境温度和是否持续录屏而变化**，飞行前请确认电量充满 [S9]。\n\n**充电**\n- 规格表：充电时间 1.5 小时，充电方式支持最大 9V/3A 快充，充电环境温度 5℃ 至 40℃ [S1]。\n- 充电说明页：连接充电器至遥控器 USB-C 接口，使用 9V/3A 的 USB 充电器最快约 1 小时 30 分钟充满 [S3]。\n- 保养提醒：为保持电池最佳状态，请确保每 3 个月对遥控器完全充电一次 [S3]。\n\n**电池规格**\n- 能量 22.32 Wh，18650 锂离子电池（LiNiMnCoO2），3.6 V、3100 mAh ×2 [S1]；简介中表述为电池容量 6200 mAh [S2]（推断：两者一致，即两节 3100 mAh 电芯合计 6200 mAh）[S1][S2]。\n\n以上数据来自《DJI RC 2 用户手册 v1.0》，若你的遥控器固件或批次不同，建议以官方下载页最新版本为准 [S7]。",
+      "citations": [
+        {
+          "ref": "S1",
+          "doc_id": "dji_rc_2_user_manual_v1_0_chs",
+          "page": 21,
+          "title": "DJI RC 2 用户手册 v1.0"
+        },
+        {
+          "ref": "S2",
+          "doc_id": "dji_rc_2_user_manual_v1_0_chs",
+          "page": 6,
+          "title": "DJI RC 2 用户手册 v1.0"
+        },
+        {
+          "ref": "S9",
+          "doc_id": "dji_rc_2_user_manual_v1_0_chs",
+          "page": 16,
+          "title": "DJI RC 2 用户手册 v1.0"
+        },
+        {
+          "ref": "S3",
+          "doc_id": "dji_rc_2_user_manual_v1_0_chs",
+          "page": 9,
+          "title": "DJI RC 2 用户手册 v1.0"
+        },
+        {
+          "ref": "S7",
+          "doc_id": "dji_rc_2_user_manual_v1_0_chs",
+          "page": 23,
+          "title": "DJI RC 2 用户手册 v1.0"
+        }
+      ],
+      "citation_count": 5,
+      "duration_ms": 8214.3,
+      "usage": {
+        "prompt_tokens": 10838,
+        "completion_tokens": 1290,
+        "llm_calls": 3,
+        "tool_calls": 2
+      },
+      "warnings": [
+        "语义复核：1 条 claim 需要复核",
+        "语义复核：partial — 实际续航会随使用方式、环境温度和是否持续录屏而变化"
+      ],
+      "tags": [
+        "spec",
+        "rc2"
+      ]
+    },
+    {
+      "id": "h-goggles3-pairing",
+      "question": "Goggles 3 怎么和飞行器对频？",
+      "passed": true,
+      "checks": {
+        "status": true,
+        "citations": true,
+        "claims": true,
+        "numbers": true
+      },
+      "status": "ok",
+      "answer": "**结论：DJI Goggles 3 与飞行器对频有两种方式：用 DJI Fly App 的“连接引导”（推荐），或用按键对频。** 对频前先做好两项准备。\n\n## 一、对频前准备\n1. 开启飞行器、Goggles 3 和遥控设备，**保持所有设备间距在 0.5 m 以内**，确认所有设备均已升级到最新固件，且电量足以完成后续操作 [S1]。\n2. 打开飞行眼镜菜单，选择「状态」，查看菜单上方显示的飞行器型号是否正确；如果不正确，点右上角切换为正确机型 [S1]。\n\n## 二、方式一：通过 DJI Fly App 对频（推荐）\n设备激活后，保持飞行眼镜与手机连接，在手机 DJI Fly App 界面点击「连接引导」，按界面指引完成对频操作 [S1]。\n\n## 三、方式二：按键对频（飞行器与飞行眼镜）\n1. 长按**飞行器电源按键**，直至发出提示音、电池电量指示灯循环闪烁 [S1]。\n2. 长按**飞行眼镜电源按键**，直至响起持续提示音、电量指示灯循环闪烁 [S1]。\n3. 对频成功后：飞行器电池电量指示灯显示电量，飞行眼镜提示音停止并显示图传画面 [S1]。\n\n若还要把**遥控设备**接入同一套系统，还需完成“飞行眼镜与遥控设备对频”：长按飞行眼镜电源按键至持续提示音且电量灯循环闪烁，再长按遥控设备电源按键至同样状态，成功后双方提示音停止、电量灯均显示电量 [S2]。\n\n## 四、注意\n- 飞行器飞行时**只能由一个遥控设备控制**；已对频但不使用的遥控设备请关闭 [S2]。\n- 在 Wi-Fi 共享画面到手机的场景下，手册提醒：**切勿长时间按住飞行眼镜电源按键，以免误启动对频** [S4]。\n\n待确认：你搭配的飞行器型号是什么（如 Avata 2、Air 3、Mini 4 Pro）？不同机型固件最低版本与适配关系不同，Goggles 3 的固件发布说明中列出的支持机型可作为核对依据 [S5]。",
+      "citations": [
+        {
+          "ref": "S1",
+          "doc_id": "dji_goggles_3_user_manual_chs",
+          "page": 15,
+          "title": "DJI Goggles 3 用户手册"
+        },
+        {
+          "ref": "S2",
+          "doc_id": "dji_goggles_3_user_manual_chs",
+          "page": 16,
+          "title": "DJI Goggles 3 用户手册"
+        },
+        {
+          "ref": "S4",
+          "doc_id": "dji_goggles_3_user_manual_chs",
+          "page": 29,
+          "title": "DJI Goggles 3 用户手册"
+        },
+        {
+          "ref": "S5",
+          "doc_id": "dji_goggles_3_release_notes_cn",
+          "page": 10,
+          "title": "DJI Goggles 3 发布说明"
+        }
+      ],
+      "citation_count": 4,
+      "duration_ms": 7336.7,
+      "usage": {
+        "prompt_tokens": 15856,
+        "completion_tokens": 831,
+        "llm_calls": 3,
+        "tool_calls": 3
+      },
+      "warnings": [],
+      "tags": [
+        "pairing",
+        "goggles3"
+      ]
+    },
+    {
+      "id": "h-m350-heat",
+      "question": "Matrice 350 RTK 电池怎么手动加热？",
+      "passed": true,
+      "checks": {
+        "status": true,
+        "citations": true,
+        "claims": true,
+        "numbers": true
+      },
+      "status": "ok",
+      "answer": "## 结论\nM350 RTK 的 **TB65 智能飞行电池**支持手动加热：**必须在关机状态下**，长按电量开关 **4 秒**即可启动加热 [S2]。\n\n## 手动加热操作\n1. 确认电池处于**关机状态**（不要装在通电的飞行器上）[S2]。\n2. **长按电池电量开关 4 秒**，启动电池加热功能 [S2]。\n3. 加热后电池温度会维持在 **16–20 ℃** 左右，**保温时间约 30 分钟** [S2]。\n4. 若需中途取消：加热过程中**长按电量开关 2 秒**即可退出加热状态 [S2]。\n\n## 相关的其他加热途径\n- **自动加热（装机体后）**：电池装到飞行器上并开启电源后，若电池温度较低，会自动加热并将温度维持在 16–20 ℃ [S2]。\n- **充电时自加热**：环境温度低于 **5 ℃** 时充电，电池会启动自加热功能 [S1]。\n- **在 BS65 电池箱内加热**：TB65 温度低于 **18 ℃** 时，插入电池箱并开启电源后，电池箱会先自动加热电池，再充电；电池箱 TB65 接口的低温加热输出为 52.8 V / 2 A [S7][S4]。\n\n## 低温使用注意（手册警告语义）\n- 低温（<5 ℃）下电池内阻加大、电压骤降，容量减少、续航缩短，**使用前务必充满电池** [S2]。\n- 起飞后若 DJI Pilot 2 提示「严重低电压报警，降落中」，建议立刻停止飞行并选合适地点降落；自动降落过程中仍可用遥控器控制航向（如推油门拉高） [S2]。\n- 极度寒冷条件下即使加热也可能达不到可用温度，需增加保温措施；建议飞行前把电池温度保持在 **16 ℃ 以上**，并提前保温以缩短预热时间 [S2]。\n- 电池温度 **低于 -20 ℃ 或高于 45 ℃** 时不会启动充电（此时充电会损坏电池）[S3]。\n\n待确认：如果你使用的是 TB60（M300 系列）或不同固件版本的电池，加热的按键时长与温度区间可能不同，请告知具体机型/电池型号，我再核对对应手册。",
+      "citations": [
+        {
+          "ref": "S2",
+          "doc_id": "matrice_350_rtk_user_manual_v1_2_cn",
+          "page": 71,
+          "title": "DJI Matrice 350 RTK 用户手册 v1.2"
+        },
+        {
+          "ref": "S1",
+          "doc_id": "matrice_350_rtk_user_manual_v1_2_cn",
+          "page": 112,
+          "title": "DJI Matrice 350 RTK 用户手册 v1.2"
+        },
+        {
+          "ref": "S7",
+          "doc_id": "matrice_350_rtk_user_manual_v1_2_cn",
+          "page": 65,
+          "title": "DJI Matrice 350 RTK 用户手册 v1.2"
+        },
+        {
+          "ref": "S4",
+          "doc_id": "matrice_350_rtk_bs65_intelligent_battery_station_user_guide_i_pdf",
+          "page": 5,
+          "title": "DJI Matrice 350 RTK 用户指南"
+        },
+        {
+          "ref": "S3",
+          "doc_id": "matrice_350_rtk_user_manual_v1_2_cn",
+          "page": 69,
+          "title": "DJI Matrice 350 RTK 用户手册 v1.2"
+        }
+      ],
+      "citation_count": 5,
+      "duration_ms": 11249.8,
+      "usage": {
+        "prompt_tokens": 13722,
+        "completion_tokens": 1905,
+        "llm_calls": 3,
+        "tool_calls": 2
+      },
+      "warnings": [
+        "语义复核：1 条 claim 需要复核",
+        "语义复核：partial — 确认电池处于关机状态（不要装在通电的飞行器上）"
+      ],
+      "tags": [
+        "battery",
+        "heat",
+        "matrice350"
+      ]
+    },
+    {
+      "id": "h-no-answer-water",
+      "question": "Mavic 4 Pro 可以在水下飞行吗？",
+      "passed": true,
+      "checks": {
+        "status": true,
+        "citations": true,
+        "claims": true,
+        "numbers": true
+      },
+      "status": "ok",
+      "answer": "**不能。Mavic 4 Pro 是消费级航拍无人机，不具备水下航行能力；只要机身触水或进水，就会有损坏甚至安全风险。**\n\n### 手册依据\n\n**1. 手册明确要求「干燥环境」使用**\n手册的飞行环境要求中明确写明：「请在干燥环境中使用飞行器、遥控器、电池、充电器、充电管家」[S13]。安全指引同时要求「请勿在大风、下雪、下雨、雷电、有雾等恶劣天气飞行」[S15]。\n\n**2. 电池严禁接触液体（涉及安全方面的明确警告）**\n「电池严禁接触液体。切勿在雨中或潮湿环境使用电池，否则可能引发电池自燃甚至爆炸」；若电池已接触液体，应立即拆下电池，放在干燥空旷处远离易燃物，并尽快联系 DJI 技术支持处理，不要再次使用 [S15]。\n\n**3. 视觉系统本身在“水下”完全失效**\n手册的清单中已经写明，视觉系统无法正常工作的场景包括「水面或者透明物体表面」[S7]；并且「视觉系统在水面上可能无法正常工作」，触发降落功能时，飞行器可能无法主动回避下方水域 [S7]。水下光线、介质条件远比水面恶劣，因此定位与避障都无法工作。\n\n**4. 甚至贴近水面飞行也要谨慎**\n安全指引要求「请勿在水面或雪地等镜面反射区域飞行，以保证视觉定位系统正常工作」[S15]；用户手册则建议飞行时「远离障碍物、人群、水面等」[S13]。\n\n### 补充说明\n- **推断：** 由上述「请干燥环境使用」和「雨雪禁飞」这些条款可以推出，机体没有为浸泡入水设计，水下飞行必然导致进水损坏，而且这类损坏不属于正常使用范畴。\n- **本次检索未找到** Mavic 4 Pro 的用户手册或安全指引中的整机防水或 IP 防护等级参数说明，因此无法给出具体的防水等级数值。\n- 如果你想问的是**在水面上方航拍**（而不是入水），那属于可行但需谨慎的场景：请保持足够高度、全程手动掌控、不要依赖视觉避障、也不要在无卫星定位时飞越水面 [S14]。\n\n如果你实际的需求是“水上/水下拍摄”，可以告诉我具体场景，我可以帮你查手册中相关的安全限制（例如抗风、无 GNSS 时的姿态模式等）。",
+      "citations": [
+        {
+          "ref": "S13",
+          "doc_id": "dji_mavic_4_pro_user_manual_v1_2_zh_cn",
+          "page": 20,
+          "title": "DJI Mavic 4 Pro 用户手册 v1.2"
+        },
+        {
+          "ref": "S15",
+          "doc_id": "dji_mavic_4_pro_safety_guidelines_rc2_v1_0",
+          "page": 4,
+          "title": "DJI Mavic 4 Pro 安全指引 v1.0"
+        },
+        {
+          "ref": "S7",
+          "doc_id": "dji_mavic_4_pro_user_manual_v1_2_zh_cn",
+          "page": 45,
+          "title": "DJI Mavic 4 Pro 用户手册 v1.2"
+        },
+        {
+          "ref": "S14",
+          "doc_id": "dji_mavic_4_pro_user_manual_v1_2_zh_cn",
+          "page": 38,
+          "title": "DJI Mavic 4 Pro 用户手册 v1.2"
+        }
+      ],
+      "citation_count": 4,
+      "duration_ms": 12691.9,
+      "usage": {
+        "prompt_tokens": 24101,
+        "completion_tokens": 1136,
+        "llm_calls": 3,
+        "tool_calls": 4
+      },
+      "warnings": [
+        "引用校验：支持度 100%，引用覆盖 75%，2 个问题",
+        "引用校验：句子包含事实性数值/主题词，但没有引用"
+      ],
+      "tags": [
+        "no_answer",
+        "mavic4pro"
+      ]
+    },
+    {
+      "id": "h-clarify-propeller",
+      "question": "桨叶怎么更换？",
+      "passed": true,
+      "checks": {
+        "status": true,
+        "citations": true,
+        "claims": true,
+        "numbers": true
+      },
+      "status": "ok",
+      "answer": "**先确认机型**：不同机型的桨叶固定方式不同（螺丝固定式 / 快拆按压旋转式），所以拆装工具和步骤也不同。你告诉我型号后，我可以给出对应手册的准确步骤。以下是手册里几类主流做法的要点，请对照你的机型再看。\n\n## 一、螺丝固定式（Mini 系列、Neo 系列、Avata 2 等）\n\n**拆卸**\n1. 先把桨叶保护罩取下：Neo、Neo 2 在拆装螺旋桨前需先移除保护罩 [S10][S11]。\n2. 用**包装内随附的螺丝刀**将螺旋桨上的螺丝拧松并卸下桨叶 [S5][S10]。\n3. 仅使用该螺丝刀拆装螺旋桨，不可用它拆装飞行器；桨叶较薄，小心划伤和挤压变形 [S5]。\n\n**安装**\n1. **认标记**：带标记的螺旋桨装到机臂带标记的电机上，不带标记的装到不带标记的电机上 [S5][S6][S9]。相邻电机上分别是正、反桨，同一电机上的两片桨叶相同 [S7]。\n2. 用包装内随附的螺丝固定并拧紧；拧螺丝时垂直向下，避免歪斜 [S5]。\n3. 装完后检查螺丝是否平整，并转动螺旋桨看是否卡顿，确认安装到位 [S5]。\n4. Neo 安装螺旋桨后，需重新装回桨叶保护罩 [S3]。\n\n**换桨时的注意点**\n- 桨叶损坏时，应把该电机上的**两片桨叶及螺丝一起卸下并一同丢弃**；更换必须用**同一包装内的两片桨叶**，不要与其他包装的桨叶混用 [S5]。\n- 只能使用 DJI 配套螺旋桨，不可混用不同型号 [S5]。\n- 螺丝刀规格：Avata 2 使用 1.5 mm 内六角螺丝刀 [S9]（其他机型请以各自包装工具为准）。\n- 螺丝松动检查周期：Mini 3 / Mini 4 Pro 为每飞行 30 小时（约 60 次）[S5][S2]；Neo 为每飞行 15 小时（约 60 次）[S3]。推断：周期随机型不同，请按你的机型手册执行。\n\n## 二、快拆桨（按压旋转式）\n\n安装后必须手动确认四只螺旋桨都已锁紧：一只手握紧电机，另一只手抓住桨叶靠近电机位置反向旋转，确认螺旋桨不会松脱；若稍用力即松脱，说明桨与底座磨损严重，需更换新桨和新底座，否则有很大的安全隐患。拆卸时，用力按压桨帽到底，然后沿螺旋桨标注的解锁方向旋转即可拆下 [S4]。\n\n## 三、Matrice 30 系列（例外情况）\n\n请使用 **2 mm 内六角扳手**更换桨叶；手册明确**建议仅在外场作业的应急情况下才可自行更换桨叶**，应急飞行结束后请尽快联系 DJI 技术支持或授权代理商检修 [S1]。\n\n## 安全提示（各机型通用）\n每次飞行前检查螺旋桨是否安装正确、紧固，是否老化、破损或变形，有问题先更换再飞；请勿贴近旋转的螺旋桨和电机，以免割伤 [S5][S6]。\n\n**待确认**：你的具体机型（如 Mini 5 Pro / Mini 4 Pro / Neo 2 / Avata 2 / M30 等）是哪一款？告诉我后，我可以给出该机型手册里的完整原文步骤和工具规格。",
+      "citations": [
+        {
+          "ref": "S10",
+          "doc_id": "dji_neo_user_manual_v1_2_zh_cn",
+          "page": 63,
+          "title": "DJI Neo 用户手册 v1.2"
+        },
+        {
+          "ref": "S11",
+          "doc_id": "dji_neo_2_user_manual_v1_2_zh_cn",
+          "page": 65,
+          "title": "DJI Neo 2 用户手册 v1.2"
+        },
+        {
+          "ref": "S5",
+          "doc_id": "dji_mini_3_user_manual_chs",
+          "page": 23,
+          "title": "DJI Mini 3 用户手册"
+        },
+        {
+          "ref": "S6",
+          "doc_id": "dji_mini_5_pro_user_manual_zh_cn",
+          "page": 48,
+          "title": "DJI Mini 5 Pro 用户手册"
+        },
+        {
+          "ref": "S9",
+          "doc_id": "dji_avata_2_user_manual_v1_0_chs",
+          "page": 43,
+          "title": "DJI Avata 2 用户手册 v1.0"
+        },
+        {
+          "ref": "S7",
+          "doc_id": "dji_mini_se_user_manual_v1.0_chs",
+          "page": 19,
+          "title": "DJI Mini SE User Manual CHS"
+        },
+        {
+          "ref": "S3",
+          "doc_id": "dji_neo_user_manual_v1_2_zh_cn",
+          "page": 64,
+          "title": "DJI Neo 用户手册 v1.2"
+        },
+        {
+          "ref": "S2",
+          "doc_id": "dji_mini_4_pro_user_manual_chs",
+          "page": 59,
+          "title": "DJI Mini 4 Pro 用户手册"
+        },
+        {
+          "ref": "S4",
+          "doc_id": "1345s_quick_release_propellers_quick_start_guide_cn",
+          "page": 5,
+          "title": "1345s Quick Release Propellers Quick Start Guide cn"
+        },
+        {
+          "ref": "S1",
+          "doc_id": "matrice30_series_user_manual_v2_2_chsi",
+          "page": 36,
+          "title": "DJI Matrice 30 用户手册 v2.2"
+        }
+      ],
+      "citation_count": 10,
+      "duration_ms": 14788.1,
+      "usage": {
+        "prompt_tokens": 12910,
+        "completion_tokens": 1934,
+        "llm_calls": 3,
+        "tool_calls": 2
+      },
+      "warnings": [
+        "引用校验：支持度 100%，引用覆盖 94%，1 个问题",
+        "引用校验：句子包含事实性数值/主题词，但没有引用"
+      ],
+      "tags": [
+        "clarify",
+        "propeller"
+      ]
+    },
+    {
+      "id": "h-m4p-table-follow",
+      "question": "Mavic 4 Pro 跟随目标时的高度范围是多少？",
+      "passed": true,
+      "checks": {
+        "status": true,
+        "citations": true,
+        "claims": true,
+        "numbers": true
+      },
+      "status": "ok",
+      "answer": "**结论**：Mavic 4 Pro 焦点跟随时，支持跟随的**最大高度**取决于跟随目标类型：人：20 米；车/船：100 米 [S2][S3]。\n\n**细节（手册明确）**\n- 在「跟随」的**追踪**子模式下，飞行器与目标支持跟随的最大距离如下：人对：水平距离 20 米、高度 20 米；车/船：水平距离 100 米、高度 100 米 [S2][S3]。\n- 如果开始跟随时，水平距离或高度**不在支持范围内**，飞行器会自主飞行到支持范围内；在推荐范围内可获得更好的跟随效果 [S1]。\n- 被跟随的动态目标运动速度建议不大于 12 m/s，否则无法正常跟随 [S1]。\n- 自动运镜子模式使用 App 默认跟随参数（用户设置不生效），且自动跟随目标**仅支持人和车** [S2][S4]。\n\n**待确认 / 说明**\n- 手册给出的只有“支持跟随的最大距离（上限）”，未给出明确的最小高度下限；如果你需要低速贴近地面跟随时怎么处理，请告诉我具体场景。\n- 另外，焦点跟随无法避开运动中的人、动物、车辆以及电线、树枝、玻璃/水面、纯色墙面等，且光照 <5 lux 或 >10000 lux 时需谨慎使用 [S1]；飞行中请随时准备按急停键接管 [S1]。\n\n（本次检索未找到关于“高度范围”以外的更细的跟随参数表，如需要可再指定版本核对。）",
+      "citations": [
+        {
+          "ref": "S2",
+          "doc_id": "dji_mavic_4_pro_user_manual_v1_2_zh_cn",
+          "page": 28,
+          "title": "DJI Mavic 4 Pro 用户手册 v1.2"
+        },
+        {
+          "ref": "S3",
+          "doc_id": "dji_mavic_4_pro_user_manual_v1_2_zh_cn",
+          "page": 29,
+          "title": "DJI Mavic 4 Pro 用户手册 v1.2"
+        },
+        {
+          "ref": "S1",
+          "doc_id": "dji_mavic_4_pro_user_manual_v1_2_zh_cn",
+          "page": 30,
+          "title": "DJI Mavic 4 Pro 用户手册 v1.2"
+        },
+        {
+          "ref": "S4",
+          "doc_id": "dji_mavic_4_pro_user_manual_v1_2_zh_cn",
+          "page": 29,
+          "title": "DJI Mavic 4 Pro 用户手册 v1.2"
+        }
+      ],
+      "citation_count": 4,
+      "duration_ms": 15024.5,
+      "usage": {
+        "prompt_tokens": 23943,
+        "completion_tokens": 1867,
+        "llm_calls": 5,
+        "tool_calls": 4
+      },
+      "warnings": [
+        "引用校验：支持度 83%，引用覆盖 100%，1 个问题",
+        "引用校验：数值未出现在被引片段中：12m/s",
+        "语义复核：1 条 claim 需要复核",
+        "语义复核：partial — 手册给出的只有“支持跟随的最大距离（上限）”，未给出明确的最小高度下限"
+      ],
+      "tags": [
+        "table",
+        "follow",
+        "mavic4pro"
+      ]
+    },
+    {
+      "id": "h-neo2-table-return",
+      "question": "Neo 2 的返航距离和高度关系是什么？",
+      "passed": true,
+      "checks": {
+        "status": true,
+        "citations": true,
+        "claims": true,
+        "numbers": true
+      },
+      "status": "ok",
+      "answer": "## 结论\n\nNeo 2 的返航距离与高度关系按「返航距离区间 × 当前高度 vs 返航高度 × 视觉条件」分档处理，核心是：**>50 m 才可能爬升到设定的返航高度；5–50 m 一律以当前高度水平直线返航；<5 m 直接降落**。以上属于「设定高度」返航路线 [S1]。\n\n## 详细规则（设定高度路线）\n\n| 返航距离 | 当前高度 | 视觉条件满足 | 视觉条件不满足 |\n|---|---|---|---|\n| >50 m | 当前高度 < 返航高度 | 自主规划路径绕过障碍物飞到空旷区域，然后上升至设定的返航高度，再按最优规划路线返航 [S1] | 上升至设定返航高度，之后向返航点方向水平直线返航 [S1] |\n| >50 m | 当前高度 ≥ 返航高度 | 以当前高度按最优规划路线返航 [S1] | 以当前高度向返航点水平直线返航 [S1] |\n| 5–50 m | 任意 | 以当前高度向返航点方向水平直线返航 [S1] | 同左，以当前高度水平直线返航 [S1] |\n| <5 m | 任意 | 直接降落；若用手机 App 操控，则 <2 m 时直接降落 [S2] | 同左 [S2] |\n\n补充要点：\n- **最佳路线模式**：环境、光线满足视觉工作条件时，飞行器会根据障碍物、图传信号等智能调整飞行高度，**设定的返航高度此时不生效** [S2]。\n- **接近返航点阶段**：若当前高度高于设定返航高度，飞行器会结合环境、光线、设定高度与当前高度，智能判断是否边返航边下降；到达返航点上方时，当前高度**不低于**设定返航高度 [S1]。\n- **避障限制**：视觉不满足时水平直线返航，前视激光雷达检测到前方障碍物会向上绕行；若障碍物高度超过限高则刹停，需用户接管 [S1]。\n- **失控返航（视觉不满足）** 与主动触发略有不同：返航距离 >50 m 时先沿历史飞行路径反向飞行 50 m，再进入设定高度返航 [S6]。\n\n## ⚠️ 安全提示（手册原文语义）\n- 若返航路线上有电线、电塔等视觉系统无法躲避的障碍物，**请选用「设定高度」返航路线，并确保设定的返航高度高于障碍物** [S7]。\n- 起飞前务必先进入 DJI Fly App 的安全设置界面，设置适当的返航高度 [S9]。\n- 返航过程中**不支持调整返航高度**；设定高度上升过程中若达到限飞高度，会停止上升并以当前高度返航 [S7]。\n- 当前高度与设定返航高度差异过大时，不同高度风速差异大，无法准确预估返航电量，请留意电量与 App 警告 [S7]。\n\n以上均出自《DJI Neo 2 用户手册 v1.2》第 55–59 页。如果你的实际场景是遥控器操控还是手机 App 操控，或想确认某档限高数值，可以告诉我具体条件，我再帮你核对。",
+      "citations": [
+        {
+          "ref": "S1",
+          "doc_id": "dji_neo_2_user_manual_v1_2_zh_cn",
+          "page": 58,
+          "title": "DJI Neo 2 用户手册 v1.2"
+        },
+        {
+          "ref": "S2",
+          "doc_id": "dji_neo_2_user_manual_v1_2_zh_cn",
+          "page": 57,
+          "title": "DJI Neo 2 用户手册 v1.2"
+        },
+        {
+          "ref": "S6",
+          "doc_id": "dji_neo_2_user_manual_v1_2_zh_cn",
+          "page": 56,
+          "title": "DJI Neo 2 用户手册 v1.2"
+        },
+        {
+          "ref": "S7",
+          "doc_id": "dji_neo_2_user_manual_v1_2_zh_cn",
+          "page": 55,
+          "title": "DJI Neo 2 用户手册 v1.2"
+        },
+        {
+          "ref": "S9",
+          "doc_id": "dji_neo_2_user_manual_v1_2_zh_cn",
+          "page": 54,
+          "title": "DJI Neo 2 用户手册 v1.2"
+        }
+      ],
+      "citation_count": 5,
+      "duration_ms": 14658.8,
+      "usage": {
+        "prompt_tokens": 14408,
+        "completion_tokens": 2309,
+        "llm_calls": 3,
+        "tool_calls": 2
+      },
+      "warnings": [
+        "引用校验：支持度 100%，引用覆盖 81%，3 个问题",
+        "引用校验：句子包含事实性数值/主题词，但没有引用",
+        "语义复核：3 条 claim 需要复核",
+        "语义复核：partial — >50 m 才可能爬升到设定的返航高度",
+        "语义复核：partial — 以上属于「设定高度」返航路线 [S1]",
+        "语义复核：partial — 视觉不满足时水平直线返航，前视激光雷达检测到前方障碍物会向上绕行；若障碍物高度超过限高则刹停，需用户接管"
+      ],
+      "tags": [
+        "table",
+        "return",
+        "neo2"
+      ]
+    }
+  ]
+}

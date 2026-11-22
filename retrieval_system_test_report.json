@@ -1,0 +1,859 @@
+{
+  "test_time": "2026-03-30T18:08:33.572429",
+  "total_tests": 21,
+  "metrics": {
+    "intent_accuracy": {
+      "metric": "intent_accuracy",
+      "total": 21,
+      "correct": 18,
+      "accuracy": 0.8571,
+      "details": [
+        {
+          "query": "Mavic 4 Pro最大飞行高度是多少",
+          "predicted": "参数查询",
+          "expected": "参数查询",
+          "correct": true,
+          "confidence": 0.6
+        },
+        {
+          "query": "如何进行指南针校准",
+          "predicted": "操作步骤查询",
+          "expected": "操作步骤查询",
+          "correct": true,
+          "confidence": 0.95
+        },
+        {
+          "query": "智能跟随功能怎么用",
+          "predicted": "操作步骤查询",
+          "expected": "功能说明查询",
+          "correct": false,
+          "confidence": 0.5
+        },
+        {
+          "query": "咋起飞",
+          "predicted": "操作步骤查询",
+          "expected": "操作步骤查询",
+          "correct": true,
+          "confidence": 0.6
+        },
+        {
+          "query": "电池咋充电",
+          "predicted": "操作步骤查询",
+          "expected": "操作步骤查询",
+          "correct": true,
+          "confidence": 0.6
+        },
+        {
+          "query": "遥控连不上",
+          "predicted": "故障排查查询",
+          "expected": "故障排查查询",
+          "correct": true,
+          "confidence": 0.95
+        },
+        {
+          "query": "图传卡了",
+          "predicted": "故障排查查询",
+          "expected": "故障排查查询",
+          "correct": true,
+          "confidence": 0.95
+        },
+        {
+          "query": "摇控器怎么配对",
+          "predicted": "操作步骤查询",
+          "expected": "操作步骤查询",
+          "correct": true,
+          "confidence": 0.5
+        },
+        {
+          "query": "电沲充不满",
+          "predicted": "操作步骤查询",
+          "expected": "故障排查查询",
+          "correct": false,
+          "confidence": 0.6
+        },
+        {
+          "query": "怎么起飞和降落",
+          "predicted": "操作步骤查询",
+          "expected": "操作步骤查询",
+          "correct": true,
+          "confidence": 0.5
+        },
+        {
+          "query": "最大高度是多少以及怎么校准指南针",
+          "predicted": "操作步骤查询",
+          "expected": "参数查询",
+          "correct": false,
+          "confidence": 0.95
+        },
+        {
+          "query": "怎么飞",
+          "predicted": "操作步骤查询",
+          "expected": "操作步骤查询",
+          "correct": true,
+          "confidence": 0.6
+        },
+        {
+          "query": "电池问题",
+          "predicted": "故障排查查询",
+          "expected": "故障排查查询",
+          "correct": true,
+          "confidence": 0.85
+        },
+        {
+          "query": "",
+          "predicted": "未知意图",
+          "expected": "未知意图",
+          "correct": true,
+          "confidence": 0.3
+        },
+        {
+          "query": "请问",
+          "predicted": "未知意图",
+          "expected": "未知意图",
+          "correct": true,
+          "confidence": 0.3
+        },
+        {
+          "query": "飞丢了怎么找回",
+          "predicted": "故障排查查询",
+          "expected": "故障排查查询",
+          "correct": true,
+          "confidence": 0.9
+        },
+        {
+          "query": "禁飞区有哪些",
+          "predicted": "安全合规查询",
+          "expected": "安全合规查询",
+          "correct": true,
+          "confidence": 1.0
+        },
+        {
+          "query": "Mavic 3和Mavic 4有什么区别",
+          "predicted": "对比查询",
+          "expected": "对比查询",
+          "correct": true,
+          "confidence": 0.9
+        },
+        {
+          "query": "电池怎么保养",
+          "predicted": "维护保养查询",
+          "expected": "维护保养查询",
+          "correct": true,
+          "confidence": 0.95
+        },
+        {
+          "query": "固件怎么升级",
+          "predicted": "操作步骤查询",
+          "expected": "操作步骤查询",
+          "correct": true,
+          "confidence": 0.9
+        },
+        {
+          "query": "怎么规划航线",
+          "predicted": "操作步骤查询",
+          "expected": "操作步骤查询",
+          "correct": true,
+          "confidence": 0.95
+        }
+      ]
+    },
+    "rewrite_accuracy": {
+      "metric": "rewrite_accuracy",
+      "total": 21,
+      "correct": 2,
+      "accuracy": 0.0952,
+      "details": [
+        {
+          "query": "Mavic 4 Pro最大飞行高度是多少",
+          "predicted": "Mavic 4 Pro最大飞行高度是多少",
+          "expected": "Mavic 4 Pro 飞行高度",
+          "correct": false,
+          "overlap": 0.5
+        },
+        {
+          "query": "如何进行指南针校准",
+          "predicted": "如何进行指南针校准",
+          "expected": "指南针 校准",
+          "correct": false,
+          "overlap": 0.0
+        },
+        {
+          "query": "智能跟随功能怎么用",
+          "predicted": "智能跟随功能怎么用",
+          "expected": "智能跟随",
+          "correct": false,
+          "overlap": 0.0
+        },
+        {
+          "query": "咋起飞",
+          "predicted": "起飞操作",
+          "expected": "起飞",
+          "correct": false,
+          "overlap": 0.0
+        },
+        {
+          "query": "电池咋充电",
+          "predicted": "电池电池充电",
+          "expected": "电池 充电",
+          "correct": false,
+          "overlap": 0.0
+        },
+        {
+          "query": "遥控连不上",
+          "predicted": "遥控器连接失败",
+          "expected": "遥控器 连接",
+          "correct": false,
+          "overlap": 0.0
+        },
+        {
+          "query": "图传卡了",
+          "predicted": "图传卡了",
+          "expected": "图传",
+          "correct": false,
+          "overlap": 0.0
+        },
+        {
+          "query": "摇控器怎么配对",
+          "predicted": "遥控器器怎么配对",
+          "expected": "遥控器 配对",
+          "correct": false,
+          "overlap": 0.0
+        },
+        {
+          "query": "电沲充不满",
+          "predicted": "电池充电异常",
+          "expected": "电池 充电",
+          "correct": false,
+          "overlap": 0.0
+        },
+        {
+          "query": "怎么起飞和降落",
+          "predicted": "怎么起飞和降落",
+          "expected": "起飞 降落",
+          "correct": false,
+          "overlap": 0.0
+        },
+        {
+          "query": "最大高度是多少以及怎么校准指南针",
+          "predicted": "最大高度是多少以及怎么校准操作指南针",
+          "expected": "高度 指南针 校准",
+          "correct": false,
+          "overlap": 0.0
+        },
+        {
+          "query": "怎么飞",
+          "predicted": "起飞操作",
+          "expected": "起飞",
+          "correct": false,
+          "overlap": 0.0
+        },
+        {
+          "query": "电池问题",
+          "predicted": "电池问题",
+          "expected": "电池",
+          "correct": false,
+          "overlap": 0.0
+        },
+        {
+          "query": "",
+          "predicted": "",
+          "expected": "",
+          "correct": true,
+          "overlap": 1.0
+        },
+        {
+          "query": "请问",
+          "predicted": "",
+          "expected": "",
+          "correct": true,
+          "overlap": 1.0
+        },
+        {
+          "query": "飞丢了怎么找回",
+          "predicted": "飞行器丢失怎么找回",
+          "expected": "飞行器丢失 找回",
+          "correct": false,
+          "overlap": 0.0
+        },
+        {
+          "query": "禁飞区有哪些",
+          "predicted": "禁飞区有哪些",
+          "expected": "禁飞区",
+          "correct": false,
+          "overlap": 0.0
+        },
+        {
+          "query": "Mavic 3和Mavic 4有什么区别",
+          "predicted": "Mavic 3和Mavic 4有什么区别",
+          "expected": "Mavic 3 Mavic 4",
+          "correct": false,
+          "overlap": 0.3333333333333333
+        },
+        {
+          "query": "电池怎么保养",
+          "predicted": "电池怎么保养",
+          "expected": "电池 保养",
+          "correct": false,
+          "overlap": 0.0
+        },
+        {
+          "query": "固件怎么升级",
+          "predicted": "固件怎么固件升级",
+          "expected": "固件 升级",
+          "correct": false,
+          "overlap": 0.0
+        },
+        {
+          "query": "怎么规划航线",
+          "predicted": "怎么规划航线",
+          "expected": "航线 规划",
+          "correct": false,
+          "overlap": 0.0
+        }
+      ]
+    },
+    "filter_accuracy": {
+      "metric": "filter_accuracy",
+      "total": 21,
+      "correct": 21,
+      "accuracy": 1.0,
+      "details": [
+        {
+          "query": "Mavic 4 Pro最大飞行高度是多少",
+          "has_filter": true,
+          "expected_filter": true,
+          "correct": true,
+          "filter_expr": "model = 'Mavic 4 Pro' AND type IN ('技术规格', '规格参数', '规格', '参数') AND section IN ('飞行性能', '技术参数', '参数说明', '飞行参数', '规格参数')"
+        },
+        {
+          "query": "如何进行指南针校准",
+          "has_filter": true,
+          "expected_filter": true,
+          "correct": true,
+          "filter_expr": "type IN ('操作指南', '操作', '操作说明', '步骤') AND section IN ('传感器校准', '使用说明', '操作流程', '校准操作', '操作步骤')"
+        },
+        {
+          "query": "智能跟随功能怎么用",
+          "has_filter": true,
+          "expected_filter": true,
+          "correct": true,
+          "filter_expr": "type IN ('操作指南', '操作', '操作说明', '步骤') AND section IN ('使用说明', '操作步骤', '操作流程')"
+        },
+        {
+          "query": "咋起飞",
+          "has_filter": true,
+          "expected_filter": true,
+          "correct": true,
+          "filter_expr": "type IN ('操作指南', '操作', '操作说明', '步骤') AND section IN ('起飞降落', '使用说明', '操作流程', '起降操作', '操作步骤')"
+        },
+        {
+          "query": "电池咋充电",
+          "has_filter": true,
+          "expected_filter": true,
+          "correct": true,
+          "filter_expr": "type IN ('操作指南', '操作', '操作说明', '步骤') AND section IN ('电池维护', '使用说明', '电池保养', '操作流程', '操作步骤')"
+        },
+        {
+          "query": "遥控连不上",
+          "has_filter": true,
+          "expected_filter": true,
+          "correct": true,
+          "filter_expr": "type IN ('解决方案', '异常', '故障', '排查') AND section IN ('常见问题', '故障排查', '异常处理')"
+        },
+        {
+          "query": "图传卡了",
+          "has_filter": true,
+          "expected_filter": true,
+          "correct": true,
+          "filter_expr": "type IN ('解决方案', '异常', '故障', '排查') AND section IN ('常见问题', '故障排查', '异常处理')"
+        },
+        {
+          "query": "摇控器怎么配对",
+          "has_filter": true,
+          "expected_filter": true,
+          "correct": true,
+          "filter_expr": "type IN ('操作指南', '操作', '操作说明', '步骤') AND section IN ('使用说明', '操作步骤', '操作流程')"
+        },
+        {
+          "query": "电沲充不满",
+          "has_filter": true,
+          "expected_filter": true,
+          "correct": true,
+          "filter_expr": "type IN ('操作指南', '操作', '操作说明', '步骤') AND section IN ('电池维护', '使用说明', '电池保养', '操作流程', '操作步骤')"
+        },
+        {
+          "query": "怎么起飞和降落",
+          "has_filter": true,
+          "expected_filter": true,
+          "correct": true,
+          "filter_expr": "type IN ('操作指南', '操作', '操作说明', '步骤') AND section IN ('使用说明', '操作步骤', '操作流程')"
+        },
+        {
+          "query": "最大高度是多少以及怎么校准指南针",
+          "has_filter": true,
+          "expected_filter": true,
+          "correct": true,
+          "filter_expr": "type IN ('操作指南', '操作', '操作说明', '步骤') AND section IN ('传感器校准', '使用说明', '操作流程', '校准操作', '操作步骤')"
+        },
+        {
+          "query": "怎么飞",
+          "has_filter": true,
+          "expected_filter": true,
+          "correct": true,
+          "filter_expr": "type IN ('操作指南', '操作', '操作说明', '步骤') AND section IN ('起飞降落', '使用说明', '操作流程', '起降操作', '操作步骤')"
+        },
+        {
+          "query": "电池问题",
+          "has_filter": true,
+          "expected_filter": true,
+          "correct": true,
+          "filter_expr": "type IN ('解决方案', '异常', '故障', '排查') AND section IN ('常见问题', '故障排查', '异常处理')"
+        },
+        {
+          "query": "",
+          "has_filter": false,
+          "expected_filter": false,
+          "correct": true,
+          "filter_expr": "无过滤条件"
+        },
+        {
+          "query": "请问",
+          "has_filter": false,
+          "expected_filter": false,
+          "correct": true,
+          "filter_expr": "无过滤条件"
+        },
+        {
+          "query": "飞丢了怎么找回",
+          "has_filter": true,
+          "expected_filter": true,
+          "correct": true,
+          "filter_expr": "type IN ('解决方案', '异常', '故障', '排查') AND section IN ('常见问题', '故障排查', '异常处理', '飞丢找回', '失联处理')"
+        },
+        {
+          "query": "禁飞区有哪些",
+          "has_filter": true,
+          "expected_filter": true,
+          "correct": true,
+          "filter_expr": "type IN ('合规', '法规', '安全') AND section IN ('法规要求', '安全须知', '合规说明')"
+        },
+        {
+          "query": "Mavic 3和Mavic 4有什么区别",
+          "has_filter": true,
+          "expected_filter": true,
+          "correct": true,
+          "filter_expr": "model IN ('Mavic 4 Pro', 'Mavic 3')"
+        },
+        {
+          "query": "电池怎么保养",
+          "has_filter": true,
+          "expected_filter": true,
+          "correct": true,
+          "filter_expr": "type IN ('存储', '维护', '保养') AND section IN ('存储指南', '维护保养', '日常维护')"
+        },
+        {
+          "query": "固件怎么升级",
+          "has_filter": true,
+          "expected_filter": true,
+          "correct": true,
+          "filter_expr": "type IN ('操作指南', '操作', '操作说明', '步骤') AND section IN ('固件升级', '系统更新', '使用说明', '操作流程', '操作步骤')"
+        },
+        {
+          "query": "怎么规划航线",
+          "has_filter": true,
+          "expected_filter": true,
+          "correct": true,
+          "filter_expr": "type IN ('操作指南', '操作', '操作说明', '步骤') AND section IN ('操作流程', '任务规划', '使用说明', '航线规划', '操作步骤')"
+        }
+      ]
+    }
+  },
+  "category_analysis": {
+    "standard": {
+      "total": 9,
+      "intent_correct": 8,
+      "filter_correct": 9,
+      "intent_accuracy": 0.8889,
+      "filter_accuracy": 1.0
+    },
+    "abbreviation": {
+      "total": 4,
+      "intent_correct": 4,
+      "filter_correct": 4,
+      "intent_accuracy": 1.0,
+      "filter_accuracy": 1.0
+    },
+    "typo": {
+      "total": 2,
+      "intent_correct": 1,
+      "filter_correct": 2,
+      "intent_accuracy": 0.5,
+      "filter_accuracy": 1.0
+    },
+    "multi_intent": {
+      "total": 2,
+      "intent_correct": 1,
+      "filter_correct": 2,
+      "intent_accuracy": 0.5,
+      "filter_accuracy": 1.0
+    },
+    "vague": {
+      "total": 2,
+      "intent_correct": 2,
+      "filter_correct": 2,
+      "intent_accuracy": 1.0,
+      "filter_accuracy": 1.0
+    },
+    "invalid": {
+      "total": 2,
+      "intent_correct": 2,
+      "filter_correct": 2,
+      "intent_accuracy": 1.0,
+      "filter_accuracy": 1.0
+    }
+  },
+  "details": [
+    {
+      "name": "标准参数查询",
+      "query": "Mavic 4 Pro最大飞行高度是多少",
+      "category": "standard",
+      "cleaned": "Mavic 4 Pro最大飞行高度是多少",
+      "precise": "Mavic 4 Pro最大飞行高度是多少",
+      "query_type": "standard",
+      "primary_intent": "参数查询",
+      "expected_intent": "参数查询",
+      "intent_correct": true,
+      "intent_confidence": 0.6,
+      "has_filter": true,
+      "expected_filter": true,
+      "filter_correct": true,
+      "processing_time_ms": 0.0
+    },
+    {
+      "name": "标准操作查询",
+      "query": "如何进行指南针校准",
+      "category": "standard",
+      "cleaned": "如何进行指南针校准",
+      "precise": "如何进行指南针校准",
+      "query_type": "abbreviation",
+      "primary_intent": "操作步骤查询",
+      "expected_intent": "操作步骤查询",
+      "intent_correct": true,
+      "intent_confidence": 0.95,
+      "has_filter": true,
+      "expected_filter": true,
+      "filter_correct": true,
+      "processing_time_ms": 0.0
+    },
+    {
+      "name": "标准功能查询",
+      "query": "智能跟随功能怎么用",
+      "category": "standard",
+      "cleaned": "智能跟随功能怎么用",
+      "precise": "智能跟随功能怎么用",
+      "query_type": "standard",
+      "primary_intent": "操作步骤查询",
+      "expected_intent": "功能说明查询",
+      "intent_correct": false,
+      "intent_confidence": 0.5,
+      "has_filter": true,
+      "expected_filter": true,
+      "filter_correct": true,
+      "processing_time_ms": 0.0
+    },
+    {
+      "name": "缩写_起飞",
+      "query": "咋起飞",
+      "category": "abbreviation",
+      "cleaned": "咋起飞",
+      "precise": "起飞操作",
+      "query_type": "abbreviation",
+      "primary_intent": "操作步骤查询",
+      "expected_intent": "操作步骤查询",
+      "intent_correct": true,
+      "intent_confidence": 0.6,
+      "has_filter": true,
+      "expected_filter": true,
+      "filter_correct": true,
+      "processing_time_ms": 0.0
+    },
+    {
+      "name": "缩写_充电",
+      "query": "电池咋充电",
+      "category": "abbreviation",
+      "cleaned": "电池咋充电",
+      "precise": "电池电池充电",
+      "query_type": "abbreviation",
+      "primary_intent": "操作步骤查询",
+      "expected_intent": "操作步骤查询",
+      "intent_correct": true,
+      "intent_confidence": 0.6,
+      "has_filter": true,
+      "expected_filter": true,
+      "filter_correct": true,
+      "processing_time_ms": 0.0
+    },
+    {
+      "name": "缩写_遥控器",
+      "query": "遥控连不上",
+      "category": "abbreviation",
+      "cleaned": "遥控连不上",
+      "precise": "遥控器连接失败",
+      "query_type": "abbreviation",
+      "primary_intent": "故障排查查询",
+      "expected_intent": "故障排查查询",
+      "intent_correct": true,
+      "intent_confidence": 0.95,
+      "has_filter": true,
+      "expected_filter": true,
+      "filter_correct": true,
+      "processing_time_ms": 0.0
+    },
+    {
+      "name": "缩写_图传",
+      "query": "图传卡了",
+      "category": "abbreviation",
+      "cleaned": "图传卡了",
+      "precise": "图传卡了",
+      "query_type": "abbreviation",
+      "primary_intent": "故障排查查询",
+      "expected_intent": "故障排查查询",
+      "intent_correct": true,
+      "intent_confidence": 0.95,
+      "has_filter": true,
+      "expected_filter": true,
+      "filter_correct": true,
+      "processing_time_ms": 0.0
+    },
+    {
+      "name": "错别字_摇控",
+      "query": "摇控器怎么配对",
+      "category": "typo",
+      "cleaned": "摇控器怎么配对",
+      "precise": "遥控器器怎么配对",
+      "query_type": "typo",
+      "primary_intent": "操作步骤查询",
+      "expected_intent": "操作步骤查询",
+      "intent_correct": true,
+      "intent_confidence": 0.5,
+      "has_filter": true,
+      "expected_filter": true,
+      "filter_correct": true,
+      "processing_time_ms": 0.0
+    },
+    {
+      "name": "错别字_电池",
+      "query": "电沲充不满",
+      "category": "typo",
+      "cleaned": "电沲充不满",
+      "precise": "电池充电异常",
+      "query_type": "typo",
+      "primary_intent": "操作步骤查询",
+      "expected_intent": "故障排查查询",
+      "intent_correct": false,
+      "intent_confidence": 0.6,
+      "has_filter": true,
+      "expected_filter": true,
+      "filter_correct": true,
+      "processing_time_ms": 0.0
+    },
+    {
+      "name": "多意图_起飞和降落",
+      "query": "怎么起飞和降落",
+      "category": "multi_intent",
+      "cleaned": "怎么起飞和降落",
+      "precise": "怎么起飞和降落",
+      "query_type": "multi_intent",
+      "primary_intent": "操作步骤查询",
+      "expected_intent": "操作步骤查询",
+      "intent_correct": true,
+      "intent_confidence": 0.5,
+      "has_filter": true,
+      "expected_filter": true,
+      "filter_correct": true,
+      "processing_time_ms": 0.9930133819580078
+    },
+    {
+      "name": "多意图_参数和校准",
+      "query": "最大高度是多少以及怎么校准指南针",
+      "category": "multi_intent",
+      "cleaned": "最大高度是多少以及怎么校准指南针",
+      "precise": "最大高度是多少以及怎么校准操作指南针",
+      "query_type": "multi_intent",
+      "primary_intent": "操作步骤查询",
+      "expected_intent": "参数查询",
+      "intent_correct": false,
+      "intent_confidence": 0.95,
+      "has_filter": true,
+      "expected_filter": true,
+      "filter_correct": true,
+      "processing_time_ms": 0.0
+    },
+    {
+      "name": "模糊_单一词汇",
+      "query": "怎么飞",
+      "category": "vague",
+      "cleaned": "怎么飞",
+      "precise": "起飞操作",
+      "query_type": "abbreviation",
+      "primary_intent": "操作步骤查询",
+      "expected_intent": "操作步骤查询",
+      "intent_correct": true,
+      "intent_confidence": 0.6,
+      "has_filter": true,
+      "expected_filter": true,
+      "filter_correct": true,
+      "processing_time_ms": 0.0
+    },
+    {
+      "name": "模糊_宽泛问题",
+      "query": "电池问题",
+      "category": "vague",
+      "cleaned": "电池问题",
+      "precise": "电池问题",
+      "query_type": "abbreviation",
+      "primary_intent": "故障排查查询",
+      "expected_intent": "故障排查查询",
+      "intent_correct": true,
+      "intent_confidence": 0.85,
+      "has_filter": true,
+      "expected_filter": true,
+      "filter_correct": true,
+      "processing_time_ms": 0.0
+    },
+    {
+      "name": "无效_空查询",
+      "query": "",
+      "category": "invalid",
+      "cleaned": "",
+      "precise": "",
+      "query_type": "invalid",
+      "primary_intent": "未知意图",
+      "expected_intent": "未知意图",
+      "intent_correct": true,
+      "intent_confidence": 0.3,
+      "has_filter": false,
+      "expected_filter": false,
+      "filter_correct": true,
+      "processing_time_ms": 0.0
+    },
+    {
+      "name": "无效_纯语气词",
+      "query": "请问",
+      "category": "invalid",
+      "cleaned": "",
+      "precise": "",
+      "query_type": "invalid",
+      "primary_intent": "未知意图",
+      "expected_intent": "未知意图",
+      "intent_correct": true,
+      "intent_confidence": 0.3,
+      "has_filter": false,
+      "expected_filter": false,
+      "filter_correct": true,
+      "processing_time_ms": 0.0
+    },
+    {
+      "name": "故障_飞丢",
+      "query": "飞丢了怎么找回",
+      "category": "standard",
+      "cleaned": "飞丢了怎么找回",
+      "precise": "飞行器丢失怎么找回",
+      "query_type": "abbreviation",
+      "primary_intent": "故障排查查询",
+      "expected_intent": "故障排查查询",
+      "intent_correct": true,
+      "intent_confidence": 0.9,
+      "has_filter": true,
+      "expected_filter": true,
+      "filter_correct": true,
+      "processing_time_ms": 0.0
+    },
+    {
+      "name": "安全_禁飞",
+      "query": "禁飞区有哪些",
+      "category": "standard",
+      "cleaned": "禁飞区有哪些",
+      "precise": "禁飞区有哪些",
+      "query_type": "standard",
+      "primary_intent": "安全合规查询",
+      "expected_intent": "安全合规查询",
+      "intent_correct": true,
+      "intent_confidence": 1.0,
+      "has_filter": true,
+      "expected_filter": true,
+      "filter_correct": true,
+      "processing_time_ms": 0.0
+    },
+    {
+      "name": "对比_机型",
+      "query": "Mavic 3和Mavic 4有什么区别",
+      "category": "standard",
+      "cleaned": "Mavic 3和Mavic 4有什么区别",
+      "precise": "Mavic 3和Mavic 4有什么区别",
+      "query_type": "multi_intent",
+      "primary_intent": "对比查询",
+      "expected_intent": "对比查询",
+      "intent_correct": true,
+      "intent_confidence": 0.9,
+      "has_filter": true,
+      "expected_filter": true,
+      "filter_correct": true,
+      "processing_time_ms": 0.0
+    },
+    {
+      "name": "维护_电池保养",
+      "query": "电池怎么保养",
+      "category": "standard",
+      "cleaned": "电池怎么保养",
+      "precise": "电池怎么保养",
+      "query_type": "abbreviation",
+      "primary_intent": "维护保养查询",
+      "expected_intent": "维护保养查询",
+      "intent_correct": true,
+      "intent_confidence": 0.95,
+      "has_filter": true,
+      "expected_filter": true,
+      "filter_correct": true,
+      "processing_time_ms": 0.0
+    },
+    {
+      "name": "固件升级",
+      "query": "固件怎么升级",
+      "category": "standard",
+      "cleaned": "固件怎么升级",
+      "precise": "固件怎么固件升级",
+      "query_type": "typo",
+      "primary_intent": "操作步骤查询",
+      "expected_intent": "操作步骤查询",
+      "intent_correct": true,
+      "intent_confidence": 0.9,
+      "has_filter": true,
+      "expected_filter": true,
+      "filter_correct": true,
+      "processing_time_ms": 0.0
+    },
+    {
+      "name": "航线规划",
+      "query": "怎么规划航线",
+      "category": "standard",
+      "cleaned": "怎么规划航线",
+      "precise": "怎么规划航线",
+      "query_type": "abbreviation",
+      "primary_intent": "操作步骤查询",
+      "expected_intent": "操作步骤查询",
+      "intent_correct": true,
+      "intent_confidence": 0.95,
+      "has_filter": true,
+      "expected_filter": true,
+      "filter_correct": true,
+      "processing_time_ms": 0.0
+    }
+  ],
+  "system_stats": {
+    "total_queries": 21,
+    "enhanced_queries": 19,
+    "classified_queries": 16,
+    "avg_processing_time_ms": 0.0472863515218099
+  }
+}

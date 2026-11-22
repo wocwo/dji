@@ -1,0 +1,83 @@
+{
+  "total": 3,
+  "passed": 3,
+  "rows": [
+    {
+      "id": "error_screenshot",
+      "passed": true,
+      "checks": {
+        "available": true,
+        "screen": true,
+        "model": true,
+        "empty_damage": true,
+        "no_damage": true
+      },
+      "observation": {
+        "model_guess": "",
+        "screen_text": "DJI Fly ERROR Battery Low\nPlease charge the battery",
+        "leds": "",
+        "visible_damage": {},
+        "confidence": 1.0,
+        "uncertain": [],
+        "error": ""
+      },
+      "duration_ms": 2925.7,
+      "tags": [
+        "screenshot",
+        "ocr"
+      ]
+    },
+    {
+      "id": "mavic3_product",
+      "passed": true,
+      "checks": {
+        "available": true,
+        "screen": true,
+        "model": true,
+        "empty_damage": true,
+        "no_damage": true
+      },
+      "observation": {
+        "model_guess": "DJI Mavic 3 Enterprise",
+        "screen_text": "",
+        "leds": "前臂末端有红色LED亮起，机身无其他可见LED状态",
+        "visible_damage": {},
+        "confidence": 0.95,
+        "uncertain": [],
+        "error": ""
+      },
+      "duration_ms": 2487.0,
+      "tags": [
+        "product",
+        "negative_control"
+      ]
+    },
+    {
+      "id": "blank_image",
+      "passed": true,
+      "checks": {
+        "available": true,
+        "screen": true,
+        "model": true,
+        "empty_damage": true,
+        "no_damage": true
+      },
+      "observation": {
+        "model_guess": "",
+        "screen_text": "",
+        "leds": "",
+        "visible_damage": {},
+        "confidence": 0.0,
+        "uncertain": [
+          "图像为空白，无可见内容"
+        ],
+        "error": ""
+      },
+      "duration_ms": 1377.0,
+      "tags": [
+        "abstain",
+        "blank"
+      ]
+    }
+  ]
+}

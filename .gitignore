@@ -1,0 +1,59 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+*.so
+.venv/
+venv/
+ENV/
+
+# IDE / local
+.idea/
+.vscode/
+.cache/
+
+# 向量库与大规模数据（勿提交仓库；本地或对象存储管理）
+chroma_db/
+chroma_db_final/
+chroma_final/
+chroma_small/
+dji_chroma_db/
+mini_model/
+vector/
+embed_cache.npz
+faiss_index.bin
+faiss_metadata_items.jsonl
+dji_chunks_final.jsonl
+
+# 打包输出
+dist/
+
+# Secrets / local environment
+.env
+.env.*
+!.env.example
+!.env.agent.example
+
+# Agent 运行产物（记忆数据库、trace、日志）
+.agent/
+.vendor/
+.edge-profile*/
+logs/
+*.sqlite3
+*.sqlite3-wal
+*.sqlite3-shm
+
+# 保留：小型演示语料（Agent 离线演示/测试）
+!data/agent_demo_corpus.jsonl
+
+# 大型/生成数据：代码仓库只保留可复现的小样本
+data/agent_manual_kb.jsonl
+data/agent_manual_pages*.jsonl
+data/agent_manual_pages_from_chunks.jsonl
+data/dji_manuals/
+data/*.pdf
+data/eval_*.json
+data/rsi_*.json
+reports/*.tar.gz
+

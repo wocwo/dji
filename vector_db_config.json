@@ -1,0 +1,18 @@
+{
+  "project": "DJI 手册向量数据库",
+  "created_at": "2026-03-27T00:09:51.575436",
+  "embedding_config": {
+    "model_type": "precomputed",
+    "cache_path": "embed_cache.npz",
+    "total_vectors": 1000
+  },
+  "chroma_config": {
+    "persist_path": "./chroma_final",
+    "collection_name": "uav_manual_db",
+    "distance_metric": "cosine"
+  },
+  "validation_summary": {
+    "total_vectors": 1000,
+    "test_queries": 3
+  }
+}

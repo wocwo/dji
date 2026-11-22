@@ -1,0 +1,7 @@
+{
+  "total_vectors": 1000,
+  "collection_name": "uav_manual_db",
+  "distance_metric": "cosine",
+  "embedding_dim": 384,
+  "last_update": "2026-03-27T00:09:51.570431"
+}

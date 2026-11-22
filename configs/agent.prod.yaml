@@ -1,0 +1,63 @@
+# 生产示例：vLLM / OpenAI 兼容后端 + 原生 function calling
+
+agent:
+  name: dji-manual-agent-prod
+  max_steps: 6
+  max_tool_calls: 10
+  max_llm_calls: 8
+  max_seconds: 120
+  max_consecutive_errors: 2
+  max_observation_chars: 6000
+  plain_text_final: false
+  evidence_guard: true
+  evidence_auto_search: true
+  max_evidence_retries: 1
+  grounding_check: true
+  claim_verifier: true
+  claim_verifier_max_claims: 12
+  citation_align: false
+  fact_coverage: true
+  max_fact_retries: 1
+
+llm:
+  provider: openai
+  model: Qwen/Qwen2-7B-Instruct-AWQ
+  base_url: http://localhost:8000/v1
+  api_key: ${AGENT_LLM_API_KEY:-EMPTY}
+  temperature: 0.1
+  max_tokens: 1600
+  timeout: 90
+  tool_mode: native
+
+knowledge:
+  backend: jsonl
+  jsonl_path: data/agent_manual_kb.jsonl
+  chroma_path: ./chroma_final
+  collection: uav_manual_db
+  top_k: 8
+  candidate_limit: 300
+  max_terms: 6
+  search_timeout: 20
+  max_passage_chars: 1600
+
+memory:
+  enabled: true
+  db_path: .agent/memory.db
+  history_turns: 6
+
+trace:
+  enabled: true
+  dir: .agent/traces
+  include_llm_output: false
+
+tools:
+  enabled:
+    - manual_search
+    - manual_fetch
+    - calculator
+    - clock
+    - update_plan
+    - save_note
+    - recall_notes
+  allow_risky: false
+  timeout: 45

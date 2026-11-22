@@ -1,0 +1,63 @@
+# DJI 手册 Agent 默认配置
+# 优先级：代码默认值 < 本文件 < AGENT_* 环境变量
+
+agent:
+  name: dji-manual-agent
+  max_steps: 8
+  max_tool_calls: 12
+  max_llm_calls: 10
+  max_seconds: 180
+  max_consecutive_errors: 3
+  max_observation_chars: 4000
+  max_history_chars: 8000
+  plain_text_final: true
+  retry_delay: 1.0
+  evidence_guard: true
+  evidence_auto_search: true
+  max_evidence_retries: 1
+  grounding_check: true
+  claim_verifier: false
+  claim_verifier_max_claims: 12
+
+llm:
+  provider: ollama
+  model: deepseek-r1:7b
+  base_url: http://localhost:11434
+  api_key: null
+  temperature: 0.2
+  max_tokens: 1200
+  timeout: 120
+  tool_mode: text
+
+knowledge:
+  backend: jsonl
+  jsonl_path: data/agent_manual_kb.jsonl
+  chroma_path: ./chroma_final
+  collection: uav_manual_db
+  top_k: 4
+  candidate_limit: 300
+  max_terms: 6
+  search_timeout: 25
+  max_passage_chars: 1200
+
+memory:
+  enabled: true
+  db_path: .agent/memory.db
+  history_turns: 6
+
+trace:
+  enabled: true
+  dir: .agent/traces
+  include_llm_output: true
+
+tools:
+  enabled:
+    - manual_search
+    - manual_fetch
+    - calculator
+    - clock
+    - update_plan
+    - save_note
+    - recall_notes
+  allow_risky: false
+  timeout: 45

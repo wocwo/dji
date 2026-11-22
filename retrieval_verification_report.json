@@ -1,0 +1,39 @@
+{
+  "validation_time": "2026-03-27T00:09:51.457124",
+  "basic_stats": {
+    "total_vectors": 1000,
+    "collection_name": "uav_manual_db"
+  },
+  "metadata_check": {
+    "fields": [
+      "token_count",
+      "section",
+      "type",
+      "page",
+      "doc_id",
+      "lang",
+      "model",
+      "keywords",
+      "title",
+      "chunk_id",
+      "index_time"
+    ]
+  },
+  "test_queries": [
+    {
+      "query": "无人机飞行高度",
+      "latency_ms": 53.18,
+      "results_count": 3
+    },
+    {
+      "query": "指南针校准",
+      "latency_ms": 3.0,
+      "results_count": 3
+    },
+    {
+      "query": "遥控器连接",
+      "latency_ms": 1.0,
+      "results_count": 3
+    }
+  ]
+}

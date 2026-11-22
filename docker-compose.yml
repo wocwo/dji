@@ -1,0 +1,21 @@
+services:
+  agent:
+    build: .
+    ports:
+      - "8077:8077"
+    env_file:
+      - .env.agent
+    environment:
+      AGENT_KB_BACKEND: jsonl
+      AGENT_RATE_LIMIT_PER_MINUTE: "30"
+      # 本地演示默认密码；生产请显式设置强密码
+      AGENT_ACCESS_TOKEN: ${AGENT_ACCESS_TOKEN:-demo-token}
+      # 本地演示可改成 offline；有 DeepSeek Key 时保持 deepseek
+      AGENT_LLM_PROVIDER: ${AGENT_LLM_PROVIDER:-deepseek}
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8077/healthz', timeout=3)"]
+      interval: 20s
+      timeout: 5s
+      retries: 5
+      start_period: 20s

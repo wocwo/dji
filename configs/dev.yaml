@@ -1,0 +1,31 @@
+retrieval:
+  chroma_db_path: ./chroma_final
+  collection_name: uav_manual_db
+  embedding_model_type: precomputed
+  embedding_cache_path: embed_cache.npz
+  multipath_top_k: 50
+  final_top_k: 10
+  reranker_type: simple
+  reranker_threshold: 0.3
+llm:
+  backend: ollama
+  model_name: deepseek-r1:7b
+  base_url: http://localhost:11434
+  timeout: 120.0
+  temperature: 0.3
+  top_p: 0.9
+  max_tokens: 2048
+  frequency_penalty: 0.0
+pipeline:
+  max_context_chars: 8000
+  score_threshold: 0.3
+  enable_logging: true
+  log_level: INFO
+  enable_post_processing: true
+  add_citations: true
+  add_disclaimer: true
+  max_retries: 2
+  retry_delay: 1.0
+logging:
+  level: INFO
+  format: '%(asctime)s - %(name)s - %(levelname)s - %(message)s'

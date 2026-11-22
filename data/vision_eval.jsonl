@@ -1,0 +1,3 @@
+{"id":"error_screenshot","kind":"generated","question":"这张截图说明什么？","expect_screen_contains":"Battery Low","expect_empty_damage":true,"tags":["screenshot","ocr"]}
+{"id":"mavic3_product","kind":"url","url":"https://imgslim.geekpark.net/uploads/image/file/c6/a9/c6a9fcd69c9d9ad8ccca1a8fb269d12c.jpeg","question":"这张图里无人机是什么型号？有没有可见损伤？","expect_model_contains":"Mavic 3","expect_empty_damage":true,"tags":["product","negative_control"]}
+{"id":"blank_image","kind":"blank","question":"图里有什么？","expect_no_hallucinated_damage":true,"tags":["abstain","blank"]}

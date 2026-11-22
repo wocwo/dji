@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DJI 手册 · Agent</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --paper: #f5f1e8;
+      --paper-2: #ece7dc;
+      --card: #fffdf8;
+      --ink: #181714;
+      --ink-2: #3c3933;
+      --muted: #7c766a;
+      --muted-2: #a29a8c;
+      --line: #e4ded2;
+      --line-2: #d8d0c1;
+      --accent: #c2410c;
+      --accent-2: #ea580c;
+      --accent-soft: #fde9dd;
+      --sidebar: #151412;
+      --sidebar-2: #1d1b18;
+      --sidebar-text: #f4efe5;
+      --sidebar-muted: #9a9386;
+      --ok: #2f9e66;
+      --danger: #b42318;
+      --shadow: 0 18px 50px rgba(55, 45, 28, .10);
+      --radius: 18px;
+      --font: "Segoe UI Variable", "Segoe UI", "Microsoft YaHei", system-ui, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0; background: var(--paper); color: var(--ink);
+      font: 14.5px/1.7 var(--font); -webkit-font-smoothing: antialiased;
+    }
+    button, textarea { font: inherit; }
+    button { cursor: pointer; }
+    ::selection { background: #f7c9ad; color: #23160d; }
+
+    .shell { height: 100dvh; display: flex; overflow: hidden; }
+
+    /* ---------------- Sidebar ---------------- */
+    .sidebar {
+      width: 252px; flex: 0 0 252px;
+      background: var(--sidebar); color: var(--sidebar-text);
+      display: flex; flex-direction: column;
+      padding: 22px 16px 18px;
+      border-right: 1px solid #2a2722;
+    }
+    .brand { display: flex; align-items: center; gap: 11px; padding: 0 6px 22px; }
+    .brand-mark {
+      width: 34px; height: 34px; border-radius: 10px;
+      display: grid; place-items: center;
+      background: linear-gradient(145deg, #ff8a4c, var(--accent));
+      color: #fff; font-weight: 800; font-size: 11px; letter-spacing: .4px;
+      box-shadow: 0 8px 20px rgba(194, 65, 12, .25);
+    }
+    .brand-name { font-weight: 650; font-size: 14px; letter-spacing: .2px; }
+    .brand-sub { color: var(--sidebar-muted); font-size: 11px; margin-top: 1px; }
+    .new-chat {
+      width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px;
+      background: var(--sidebar-text); color: #1b1916;
+      border: 1px solid #fff; border-radius: 11px;
+      padding: 9px 12px; font-weight: 650; font-size: 13px;
+      transition: .16s ease;
+    }
+    .new-chat:hover { background: #fff; transform: translateY(-1px); }
+    .new-chat svg { width: 15px; height: 15px; }
+
+    .nav-label {
+      color: var(--sidebar-muted); font-size: 10px; font-weight: 700;
+      letter-spacing: .12em; text-transform: uppercase;
+      margin: 26px 6px 8px;
+    }
+    .nav-item {
+      width: 100%; display: flex; align-items: center; gap: 10px;
+      color: #d8d1c4; background: transparent; border: 0;
+      padding: 9px 10px; border-radius: 9px; text-align: left; font-size: 13px;
+    }
+    .nav-item:hover { background: #24211d; color: #fff; }
+    .nav-item.active { background: #2a261f; color: #fff; }
+    .nav-item svg { width: 15px; height: 15px; opacity: .7; }
+    .nav-item .count { margin-left: auto; color: var(--sidebar-muted); font-size: 11px; }
+
+    .side-card {
+      margin: 16px 4px 0; padding: 12px;
+      border: 1px solid #302b24; border-radius: 12px; background: var(--sidebar-2);
+    }
+    .side-card .label { color: var(--sidebar-muted); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; }
+    .side-card .value { font-size: 20px; font-weight: 650; margin-top: 2px; }
+    .side-card .hint { color: var(--sidebar-muted); font-size: 11px; margin-top: 2px; }
+    .recent-label {
+      color: var(--sidebar-muted); font-size: 10px; font-weight: 700;
+      letter-spacing: .12em; text-transform: uppercase; margin: 18px 6px 6px;
+    }
+    .recent-list { display: flex; flex-direction: column; gap: 3px; max-height: 220px; overflow-y: auto; }
+    .session-btn {
+      width: 100%; text-align: left; border: 0; background: transparent;
+      color: #c9c1b4; padding: 7px 9px; border-radius: 8px; font-size: 11.5px;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      appearance: none; -webkit-appearance: none; font-family: inherit;
+    }
+    .session-btn:hover, .session-btn.active { background: #24211d; color: #fff; }
+    .recent-empty { color: #6f685d; font-size: 11px; padding: 4px 8px; }
+
+    .side-bottom { margin-top: auto; padding: 14px 6px 0; border-top: 1px solid #2a2722; }
+    .status-line { display: flex; align-items: center; gap: 8px; color: var(--sidebar-muted); font-size: 12px; }
+    .dot { width: 6px; height: 6px; border-radius: 50%; background: #55c98b; box-shadow: 0 0 0 3px rgba(85, 201, 139, .10); }
+    .dot.busy { background: #ffb27a; animation: pulse 1.4s infinite; }
+    .dot.err { background: #ff7a70; }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .35; } }
+
+    /* ---------------- Main ---------------- */
+    .main { flex: 1; min-width: 0; display: flex; flex-direction: column; background: var(--paper); }
+    .topbar {
+      height: 66px; flex: 0 0 66px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 max(24px, calc((100% - 860px) / 2)); border-bottom: 1px solid var(--line);
+      background: rgba(245, 241, 232, .86); backdrop-filter: blur(12px);
+    }
+    .mobile-brand { display: none; align-items: center; gap: 9px; }
+    .page-title { font-size: 14px; font-weight: 650; letter-spacing: -.01em; }
+    .page-sub { color: var(--muted); font-size: 11.5px; margin-top: 1px; }
+    .top-actions { display: flex; align-items: center; gap: 10px; }
+    .chip {
+      display: inline-flex; align-items: center; gap: 7px;
+      height: 30px; padding: 0 11px; border-radius: 999px;
+      border: 1px solid var(--line-2); background: var(--card);
+      color: var(--muted); font-size: 11.5px;
+    }
+    .chip strong { color: var(--ink-2); font-weight: 600; }
+
+    .scroll { flex: 1; overflow-y: auto; scroll-behavior: smooth; }
+    .conversation {
+      width: min(860px, calc(100% - 48px));
+      margin: 0 auto;
+      padding: 42px 0 34px;
+      display: flex; flex-direction: column; gap: 24px;
+    }
+
+    /* ---------------- Empty state ---------------- */
+    .welcome { padding: 34px 2px 8px; }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 7px;
+      color: var(--accent); font-size: 10px; font-weight: 750;
+      letter-spacing: .16em; text-transform: uppercase; margin-bottom: 14px;
+    }
+    .eyebrow::before { content: ""; width: 18px; height: 1px; background: var(--accent); }
+    .welcome h1 {
+      margin: 0; font-size: clamp(30px, 4.4vw, 44px);
+      line-height: 1.13; letter-spacing: -.045em; font-weight: 630;
+      color: #191713; max-width: 760px;
+    }
+    .welcome h1 em { font-style: normal; color: var(--muted); font-weight: 420; }
+    .welcome .lede { margin: 14px 0 0; color: var(--muted); max-width: 580px; font-size: 14px; }
+    .suggestions {
+      margin-top: 30px; display: grid;
+      grid-template-columns: 1fr 1fr; gap: 10px;
+    }
+    .suggestion {
+      display: flex; align-items: flex-start; gap: 11px;
+      text-align: left; background: var(--card);
+      border: 1px solid var(--line); border-radius: 13px;
+      padding: 13px 14px; color: var(--ink-2);
+      transition: .16s ease;
+    }
+    .suggestion:hover { border-color: #c9b9a6; box-shadow: 0 8px 24px rgba(55, 45, 28, .07); transform: translateY(-1px); }
+    .suggestion .icon {
+      width: 26px; height: 26px; flex: 0 0 26px; border-radius: 8px;
+      display: grid; place-items: center; background: var(--accent-soft); color: var(--accent);
+      font-size: 11px; font-weight: 750;
+    }
+    .suggestion .q { display: block; font-size: 12.5px; font-weight: 560; line-height: 1.45; }
+    .suggestion .d { display: block; color: var(--muted-2); font-size: 11px; margin-top: 2px; }
+    .suggestion > span:last-child { display: block; min-width: 0; }
+
+    /* ---------------- Messages ---------------- */
+    .msg { display: flex; gap: 12px; animation: enter .22s ease both; }
+    @keyframes enter { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: none; } }
+    .msg.user { justify-content: flex-end; }
+    .avatar {
+      width: 28px; height: 28px; flex: 0 0 28px; border-radius: 8px;
+      display: grid; place-items: center; font-size: 10px; font-weight: 750;
+      margin-top: 2px;
+    }
+    .msg.assistant .avatar { background: var(--ink); color: #fff; }
+    .msg.user .avatar { order: 2; background: #ddd4c4; color: #5a5042; }
+    .bubble { max-width: min(730px, 88%); }
+    .msg.user .bubble {
+      background: var(--ink); color: #f7f2e8;
+      border-radius: 15px 15px 5px 15px;
+      padding: 11px 15px; font-size: 13.5px;
+      box-shadow: 0 8px 22px rgba(24, 23, 20, .10);
+    }
+    .msg.assistant .bubble { flex: 1; min-width: 0; padding-top: 1px; }
+    .answer-head {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 10px; margin-bottom: 10px;
+    }
+    .answer-label { color: var(--muted); font-size: 11px; font-weight: 650; letter-spacing: .08em; text-transform: uppercase; }
+    .copy-btn {
+      border: 1px solid var(--line); background: var(--card); color: var(--muted);
+      border-radius: 7px; padding: 3px 8px; font-size: 10.5px;
+      opacity: 0; transition: .15s ease;
+    }
+    .msg.assistant:hover .copy-btn { opacity: 1; }
+    .copy-btn:hover { color: var(--ink); border-color: var(--line-2); }
+
+    .answer h3 {
+      font-size: 15.5px; line-height: 1.4; margin: 20px 0 8px;
+      letter-spacing: -.012em; color: #15130f;
+    }
+    .answer h3:first-child { margin-top: 0; }
+    .answer p { margin: 0 0 10px; color: #38342d; }
+    .answer p:last-child { margin-bottom: 0; }
+    .answer strong { color: #15130f; font-weight: 650; }
+    .answer ul { margin: 7px 0 13px; padding-left: 20px; color: #38342d; }
+    .answer li { margin: 4px 0; }
+    .answer li::marker { color: var(--accent); }
+    .answer code {
+      background: #eee8dc; color: #5c3b23;
+      padding: 1px 5px; border-radius: 5px; font-size: 12.5px;
+    }
+    .cite-ref {
+      display: inline-flex; align-items: center; vertical-align: 1px;
+      padding: 0 5px; margin: 0 2px; border-radius: 4px;
+      background: var(--accent-soft); color: #9a3412;
+      border: 1px solid #f5d1bd; font-size: 10.5px; font-weight: 700; line-height: 17px;
+    }
+    .table-wrap {
+      overflow-x: auto; margin: 12px 0 16px;
+      border: 1px solid var(--line); border-radius: 10px; background: var(--card);
+    }
+    table { border-collapse: collapse; width: 100%; font-size: 12.5px; }
+    th, td { padding: 8px 11px; text-align: left; border-bottom: 1px solid var(--line); white-space: nowrap; }
+    th { background: #f1ece2; color: #4b463d; font-weight: 650; }
+    tr:last-child td { border-bottom: 0; }
+
+    .sources { margin-top: 18px; padding-top: 13px; border-top: 1px solid var(--line); }
+    .sources-title {
+      color: var(--muted-2); font-size: 10px; font-weight: 750;
+      letter-spacing: .12em; text-transform: uppercase; margin-bottom: 8px;
+    }
+    .source-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 7px; }
+    .source {
+      display: block; min-width: 0; text-decoration: none;
+      border: 1px solid var(--line); border-radius: 9px;
+      background: var(--card); padding: 8px 10px;
+    }
+    .source:hover { border-color: #cdbcaada; }
+    .source .ref { color: var(--accent); font-size: 10.5px; font-weight: 750; }
+    .source .title { color: #3e3931; font-size: 11.5px; margin-top: 1px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .source .where { color: var(--muted-2); font-size: 10.5px; margin-top: 1px; }
+    .answer-meta { display: flex; flex-wrap: wrap; gap: 7px 14px; margin-top: 12px; color: var(--muted-2); font-size: 10.5px; }
+    .answer-meta b { color: var(--muted); font-weight: 600; }
+
+    .typing { display: inline-flex; gap: 5px; align-items: center; padding: 3px 0; }
+    .typing i { width: 5px; height: 5px; border-radius: 50%; background: var(--muted); animation: blink 1.2s infinite; }
+    .typing i:nth-child(2) { animation-delay: .15s; }
+    .typing i:nth-child(3) { animation-delay: .3s; }
+    @keyframes blink { 0%, 80%, 100% { opacity: .25; transform: translateY(0); } 40% { opacity: 1; transform: translateY(-2px); } }
+
+    /* ---------------- Composer ---------------- */
+    .composer-wrap {
+      flex: 0 0 auto; padding: 12px 24px 18px;
+      background: linear-gradient(180deg, transparent, var(--paper) 30%);
+    }
+    .composer {
+      width: min(860px, 100%); margin: 0 auto;
+      background: var(--card); border: 1px solid var(--line-2);
+      border-radius: 16px; box-shadow: var(--shadow);
+      transition: .18s ease;
+    }
+    .composer:focus-within { border-color: #b9a58d; box-shadow: 0 18px 55px rgba(55, 45, 28, .14); }
+    .attachment-preview {
+      display: none; align-items: center; gap: 9px;
+      margin: 10px 12px 0; padding: 7px;
+      background: var(--paper); border: 1px solid var(--line);
+      border-radius: 10px; width: fit-content;
+    }
+    .attachment-preview.show { display: flex; }
+    .attachment-preview img {
+      width: 46px; height: 46px; object-fit: cover;
+      border-radius: 7px; display: block; background: #eee;
+    }
+    .attachment-preview .meta { max-width: 210px; }
+    .attachment-preview .meta strong { display: block; font-size: 11px; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .attachment-preview .meta span { display: block; color: var(--muted); font-size: 10px; margin-top: 2px; }
+    .attachment-preview .remove {
+      width: 20px; height: 20px; border: 0; border-radius: 50%;
+      background: rgba(24,23,20,.08); color: var(--muted); font-size: 14px; line-height: 1;
+    }
+    .attachment-preview .remove:hover { background: rgba(24,23,20,.16); color: var(--ink); }
+    .chat-image { margin-bottom: 8px; }
+    .chat-image img {
+      display: block; max-width: 250px; max-height: 230px;
+      width: auto; height: auto; border-radius: 10px;
+      border: 1px solid rgba(255,255,255,.18);
+    }
+    .composer textarea {
+      display: block; width: 100%; min-height: 52px; max-height: 170px;
+      resize: none; border: 0; outline: 0; background: transparent;
+      color: var(--ink); padding: 15px 17px 3px; line-height: 1.6;
+    }
+    .composer textarea::placeholder { color: var(--muted-2); }
+    .composer-foot { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 5px 9px 9px 13px; }
+    .composer-left { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .attach-btn {
+      width: 28px; height: 28px; flex: 0 0 28px; display: grid; place-items: center;
+      border: 1px solid var(--line); background: var(--card); color: var(--muted);
+      border-radius: 8px; transition: .15s ease;
+    }
+    .attach-btn:hover { color: var(--accent); border-color: #cdbcaa; }
+    .attach-btn svg { width: 14px; height: 14px; }
+    .attach-status { color: var(--accent); font-size: 10.5px; max-width: 180px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .attach-status.error { color: var(--danger); }
+    .mode-switch {
+      display: inline-flex; align-items: center; padding: 2px;
+      border: 1px solid var(--line); border-radius: 9px; background: var(--paper-2);
+    }
+    .mode-btn {
+      border: 0; background: transparent; color: var(--muted);
+      font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 7px;
+      transition: .15s ease;
+    }
+    .mode-btn.active {
+      background: var(--card); color: var(--ink);
+      box-shadow: 0 1px 4px rgba(55, 45, 28, .12);
+    }
+    .mode-btn:hover:not(.active) { color: var(--ink-2); }
+    .mode-hint { color: var(--muted-2); font-size: 10.5px; }
+    .hint { color: var(--muted-2); font-size: 10.5px; }
+    .send {
+      width: 35px; height: 35px; border: 0; border-radius: 10px;
+      display: grid; place-items: center;
+      background: var(--ink); color: #fff; transition: .16s ease;
+    }
+    .send:hover:not(:disabled) { background: var(--accent); transform: translateY(-1px); }
+    .send:disabled { opacity: .4; cursor: not-allowed; }
+    .send svg { width: 16px; height: 16px; }
+
+    .toast {
+      position: fixed; left: 50%; bottom: 112px;
+      transform: translateX(-50%) translateY(8px);
+      background: var(--ink); color: #fff;
+      padding: 8px 13px; border-radius: 9px; font-size: 12px;
+      opacity: 0; pointer-events: none; transition: .2s ease; z-index: 30;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    @media (max-width: 860px) {
+      .sidebar { display: none; }
+      .mobile-brand { display: flex; }
+      .topbar { height: 58px; flex-basis: 58px; padding: 0 16px; }
+      .page-title, .page-sub { display: none; }
+      .top-actions .chip:first-child { display: none; }
+      .conversation { width: calc(100% - 26px); padding: 24px 0 16px; gap: 18px; }
+      .welcome { padding-top: 18px; }
+      .welcome h1 { font-size: 29px; }
+      .suggestions { grid-template-columns: 1fr; margin-top: 22px; }
+      .bubble { max-width: 94%; }
+      .msg.user .bubble { max-width: 90%; }
+      .msg.assistant .avatar, .msg.user .avatar { width: 25px; height: 25px; flex-basis: 25px; }
+      .composer-wrap { padding: 8px 10px 12px; }
+      .composer textarea { padding: 13px 14px 2px; }
+      .hint { display: none; }
+    }
+  </style>
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-mark">DJI</div>
+      <div>
+        <div class="brand-name">Manual Agent</div>
+        <div class="brand-sub">官方手册 · 有引用的回答</div>
+      </div>
+    </div>
+    <button class="new-chat" id="newChat">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+      新问题
+    </button>
+    <div class="nav-label">Workspace</div>
+    <button class="nav-item active">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"/></svg>
+      手册问答
+    </button>
+    <button class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+      引用
+    </button>
+    <div class="side-card">
+      <div class="label">知识库</div>
+      <div class="value">26,596</div>
+      <div class="hint">页面与表格 · 1,067 份文档</div>
+    </div>
+    <div class="recent-label">最近会话</div>
+    <div class="recent-list" id="recentSessions"><div class="recent-empty">暂无会话</div></div>
+    <div class="side-bottom">
+      <div class="status-line"><i class="dot" id="connDot"></i><span id="connText">在线</span></div>
+      <div class="status-line" style="margin-top:6px;color:#6f685d;font-size:11px;">DeepSeek · ONNX rerank</div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div class="mobile-brand">
+        <div class="brand-mark" style="width:28px;height:28px;border-radius:8px;font-size:9px;">DJI</div>
+        <div class="page-title" style="display:block;">Manual Agent</div>
+      </div>
+      <div>
+        <div class="page-title">手册问答</div>
+        <div class="page-sub">基于官方文档，回答带页码与引用</div>
+      </div>
+      <div class="top-actions">
+        <span class="chip"><strong>26,596</strong> 页</span>
+        <span class="chip"><i class="dot" id="topDot"></i><span id="topStatus">就绪</span></span>
+      </div>
+    </header>
+
+    <div class="scroll" id="scroll">
+      <div class="conversation">
+        <section class="welcome" id="welcome">
+          <div class="eyebrow">Manual intelligence</div>
+          <h1>找到答案。<br /><em>也保留它的页码。</em></h1>
+          <p class="lede">问我大疆机型、电池、遥控器或固件问题。每个回答都带手册、版本和页码。</p>
+          <div class="suggestions">
+            <button class="suggestion" data-q="Mini 4 Pro 电池低温怎么保养？">
+              <span class="icon">01</span>
+              <span><span class="q">Mini 4 Pro 电池低温怎么保养？</span><span class="d">电池 · 低温</span></span>
+            </button>
+            <button class="suggestion" data-q="Matrice 30 电池的充电温度范围是多少？">
+              <span class="icon">02</span>
+              <span><span class="q">Matrice 30 充电温度范围</span><span class="d">规格 · 充电</span></span>
+            </button>
+            <button class="suggestion" data-q="Neo 2 的返航距离和高度关系是什么？">
+              <span class="icon">03</span>
+              <span><span class="q">Neo 2 返航高度怎么设置</span><span class="d">返航 · 安全</span></span>
+            </button>
+            <button class="suggestion" data-q="Air 3S 固件怎么升级？">
+              <span class="icon">04</span>
+              <span><span class="q">Air 3S 固件升级步骤</span><span class="d">固件 · DJI Fly</span></span>
+            </button>
+          </div>
+        </section>
+        <div id="messages"></div>
+      </div>
+    </div>
+
+    <div class="composer-wrap">
+      <div class="composer">
+        <div class="attachment-preview" id="attachmentPreviewWrap">
+          <img id="attachmentPreviewImg" alt="" />
+          <div class="meta">
+            <strong id="attachmentPreviewName"></strong>
+            <span id="attachmentPreviewHint">图片已附加</span>
+          </div>
+          <button class="remove" id="attachmentRemove" type="button" title="移除图片" aria-label="移除图片">×</button>
+        </div>
+        <textarea id="task" rows="1" placeholder="输入机型、操作或参数问题…"></textarea>
+        <div class="composer-foot">
+          <div class="composer-left">
+            <input id="fileInput" type="file" accept="image/png,image/jpeg,image/webp" hidden />
+            <button class="attach-btn" id="attachBtn" type="button" title="上传报错截图/照片" aria-label="上传图片">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="m21.4 11.6-8.5 8.5a6 6 0 0 1-8.5-8.5l8.5-8.5a4 4 0 1 1 5.7 5.7l-8.5 8.5a2 2 0 0 1-2.8-2.8l7.8-7.8"/></svg>
+            </button>
+            <span class="attach-status" id="attachmentStatus"></span>
+            <div class="mode-switch" role="group" aria-label="回答模式">
+              <button class="mode-btn" data-mode="fast" type="button">快速</button>
+              <button class="mode-btn" data-mode="normal" type="button">标准</button>
+              <button class="mode-btn active" data-mode="auto" type="button">自动</button>
+            </div>
+            <span class="mode-hint" id="modeHint">按风险自动选择，高风险走标准</span>
+            <span class="hint">Enter 发送 · Shift + Enter 换行</span>
+          </div>
+          <button class="send" id="run" aria-label="Send" title="Send">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const $ = (id) => document.getElementById(id);
+let polling = null;
+let busy = false;
+let answerMode = 'auto';
+let attachmentText = '';
+let attachmentName = '';
+let attachmentPreviewUrl = '';
+let sentImageUrls = [];
+
+function newSessionId() {
+  try {
+    return (crypto.randomUUID && crypto.randomUUID()) || ('sess-' + Date.now() + '-' + Math.random().toString(16).slice(2));
+  } catch {
+    return 'sess-' + Date.now() + '-' + Math.random().toString(16).slice(2);
+  }
+}
+function loadSessionId() {
+  try {
+    const saved = localStorage.getItem('dji_manual_session');
+    if (saved) return saved;
+    const created = newSessionId();
+    localStorage.setItem('dji_manual_session', created);
+    return created;
+  } catch {
+    return newSessionId();
+  }
+}
+let sessionId = loadSessionId();
+
+function authHeaders() {
+  // 认证走 HttpOnly cookie；JS 不读取 token
+  return {};
+}
+
+function authQuery() {
+  // token 不再拼进 URL，避免出现在访问日志和浏览器历史里
+  return '';
+}
+
+async function loadSessions() {
+  const box = $('recentSessions');
+  try {
+    const res = await fetch(`/v1/sessions?limit=12&_=${Date.now()}&${authQuery()}`, {
+      credentials: 'include', cache: 'no-store', headers: authHeaders(),
+    });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    const sessions = data.sessions || [];
+    box.innerHTML = '';
+    if (!sessions.length) {
+      box.innerHTML = '<div class="recent-empty">暂无会话</div>';
+      return;
+    }
+    for (const item of sessions) {
+      const button = document.createElement('button');
+      button.className = 'session-btn' + (item.session_id === sessionId ? ' active' : '');
+      button.title = item.preview || item.session_id;
+      button.textContent = (item.preview || '未命名会话').slice(0, 34);
+      button.addEventListener('click', () => openSession(item.session_id));
+      box.appendChild(button);
+    }
+  } catch (err) {
+    box.innerHTML = '<div class="recent-empty">暂无历史会话 · ' + (err && err.message ? err.message : 'unknown') + '</div>';
+  }
+}
+
+async function openSession(id) {
+  if (busy) return;
+  try {
+    const res = await fetch(`/v1/sessions/${encodeURIComponent(id)}?${authQuery()}`, { headers: authHeaders() });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    const turns = data.turns || [];
+    sessionId = id;
+    try { localStorage.setItem('dji_manual_session', id); } catch {}
+    $('messages').innerHTML = '';
+    $('welcome').style.display = turns.length ? 'none' : '';
+    for (const turn of turns) {
+      const text = turn.content || '';
+      if (turn.role === 'user') addMessage('user', `<p>${escapeHtml(text)}</p>`);
+      else addMessage('assistant', renderMarkdown(text));
+    }
+    setStatus('就绪');
+    await loadSessions();
+    scrollBottom();
+  } catch (err) {
+    toast('加载会话失败');
+  }
+}
+
+function setStatus(text, mode = '') {
+  $('connText').textContent = text;
+  $('topStatus').textContent = text;
+  const cls = 'dot' + (mode ? ' ' + mode : '');
+  $('connDot').className = cls;
+  $('topDot').className = cls;
+}
+function toast(message) {
+  const el = $('toast');
+  el.textContent = message;
+  el.classList.add('show');
+  clearTimeout(toast._timer);
+  toast._timer = setTimeout(() => el.classList.remove('show'), 2400);
+}
+function escapeHtml(value) {
+  return String(value ?? '').replace(/[&<>"']/g, (ch) => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  }[ch]));
+}
+function inline(text) {
+  return text
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/`([^`]+)`/g, '<code>$1</code>')
+    .replace(/\[S(\d+)\]/g, '<span class="cite-ref">S$1</span>');
+}
+function renderTable(rows) {
+  if (rows.length < 2) return rows.map((row) => `<p>${inline(row)}</p>`).join('');
+  const cells = (row) => row.trim().replace(/^\||\|$/g, '').split('|').map((cell) => cell.trim());
+  const head = cells(rows[0]);
+  const body = rows.slice(2).map(cells);
+  const headHtml = head.map((cell) => `<th>${inline(cell)}</th>`).join('');
+  const bodyHtml = body.map((row) => `<tr>${row.map((cell) => `<td>${inline(cell)}</td>`).join('')}</tr>`).join('');
+  return `<div class="table-wrap"><table><thead><tr>${headHtml}</tr></thead><tbody>${bodyHtml}</tbody></table></div>`;
+}
+function renderMarkdown(markdown) {
+  const lines = escapeHtml(markdown).split('\n');
+  const html = [];
+  let listOpen = false;
+  let tableRows = [];
+  const closeList = () => { if (listOpen) { html.push('</ul>'); listOpen = false; } };
+  const flushTable = () => { if (tableRows.length) { html.push(renderTable(tableRows)); tableRows = []; } };
+  for (const raw of lines) {
+    const line = raw.trimEnd();
+    if (/^\s*\|.*\|\s*$/.test(line)) { closeList(); tableRows.push(line); continue; }
+    flushTable();
+    if (!line.trim()) { closeList(); continue; }
+    const heading = line.match(/^#{1,4}\s+(.+)$/);
+    if (heading) { closeList(); html.push(`<h3>${inline(heading[1])}</h3>`); continue; }
+    const bullet = line.match(/^\s*[-*]\s+(.+)$/);
+    if (bullet) {
+      if (!listOpen) { html.push('<ul>'); listOpen = true; }
+      html.push(`<li>${inline(bullet[1])}</li>`);
+      continue;
+    }
+    closeList();
+    html.push(`<p>${inline(line)}</p>`);
+  }
+  closeList();
+  flushTable();
+  return html.join('');
+}
+function addMessage(role, content = '') {
+  $('welcome').style.display = 'none';
+  const row = document.createElement('div');
+  row.className = `msg ${role}`;
+  const avatar = document.createElement('div');
+  avatar.className = 'avatar';
+  avatar.textContent = role === 'user' ? 'You' : 'DJI';
+  const bubble = document.createElement('div');
+  bubble.className = 'bubble';
+  bubble.innerHTML = content;
+  if (role === 'user') row.append(bubble, avatar); else row.append(avatar, bubble);
+  $('messages').appendChild(row);
+  scrollBottom();
+  return bubble;
+}
+function scrollBottom() {
+  requestAnimationFrame(() => { $('scroll').scrollTop = $('scroll').scrollHeight; });
+}
+function loadingBubble() {
+  return addMessage('assistant', '<span class="typing"><i></i><i></i><i></i></span>');
+}
+function renderAnswer(bubble, data) {
+  const answer = data.answer || '（没有返回回答）';
+  const citations = data.citations || [];
+  const usage = data.usage || {};
+  const meta = [];
+  if (data.duration_ms) meta.push(`<b>耗时</b> ${(data.duration_ms / 1000).toFixed(1)}s`);
+  if (usage.total_tokens) meta.push(`<b>Token</b> ${usage.total_tokens}`);
+  if (usage.llm_calls) meta.push(`<b>LLM</b> ${usage.llm_calls} 次`);
+  if (usage.tool_calls) meta.push(`<b>工具</b> ${usage.tool_calls} 次`);
+  const sources = citations.length ? `
+    <div class="sources">
+      <div class="sources-title">引用来源 · ${citations.length}</div>
+      <div class="source-grid">
+        ${citations.map((c) => `
+          <div class="source">
+            <div class="ref">${escapeHtml(c.ref || '')}</div>
+            <div class="title">${escapeHtml(c.title || 'Untitled manual')}</div>
+            <div class="where">${escapeHtml(c.model || '')} ${escapeHtml(c.version || '')} · p.${escapeHtml(c.page ?? '?')}</div>
+          </div>`).join('')}
+      </div>
+    </div>` : '';
+  bubble.innerHTML = `
+    <div class="answer-head">
+      <span class="answer-label">回答</span>
+      <button class="copy-btn" type="button">复制</button>
+    </div>
+    <div class="answer">${renderMarkdown(answer)}</div>
+    ${sources}
+    ${meta.length ? `<div class="answer-meta">${meta.join('')}</div>` : ''}`;
+  const copy = bubble.querySelector('.copy-btn');
+  if (copy) copy.addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText(answer); toast('回答已复制'); }
+    catch { toast('复制失败'); }
+  });
+  loadSessions();
+  scrollBottom();
+}
+async function poll(jobId, bubble) {
+  try {
+    const res = await fetch(`/v1/agent/jobs/${encodeURIComponent(jobId)}?${authQuery()}`, { headers: authHeaders() });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const job = await res.json();
+    if (job.status === 'done') { renderAnswer(bubble, job.result || {}); setStatus('就绪'); finish(); return; }
+    if (job.status === 'error') {
+      bubble.innerHTML = `<p style="color:var(--danger)">执行失败：${escapeHtml(job.error || '未知错误')}</p>`;
+      setStatus('异常', 'err'); finish(); return;
+    }
+    const stage = job.last_event && job.last_event.type;
+    const labels = {
+      queued: '排队中',
+      run_start: '准备检索',
+      llm_response: '生成回答',
+      tool_call: '检索手册',
+      tool_result: '整理证据',
+      warning: '校验中',
+      final: '整理引用',
+    };
+    if (stage && labels[stage]) setStatus(labels[stage], 'busy');
+    polling = setTimeout(() => poll(jobId, bubble), 800);
+  } catch (err) {
+    bubble.innerHTML = `<p style="color:var(--danger)">连接失败：${escapeHtml(err.message)}</p>`;
+    setStatus('连接失败', 'err'); finish();
+  }
+}
+function finish() {
+  busy = false; $('run').disabled = false; $('task').focus();
+}
+async function submit() {
+  const task = $('task').value.trim();
+  const imageUrl = attachmentPreviewUrl;
+  const sentText = attachmentText;
+  if ((!task && !imageUrl) || busy) return;
+  busy = true;
+  if (polling) clearTimeout(polling);
+  $('run').disabled = true;
+  setStatus('思考中', 'busy');
+  const imageHtml = imageUrl ? `<div class="chat-image"><img src="${imageUrl}" alt="上传图片" /></div>` : '';
+  addMessage('user', `${imageHtml}${task ? `<p>${escapeHtml(task)}</p>` : ''}`);
+  if (imageUrl) {
+    sentImageUrls.push(imageUrl);
+    attachmentPreviewUrl = '';
+    $('attachmentPreviewWrap').classList.remove('show');
+    $('attachmentPreviewImg').removeAttribute('src');
+    attachmentText = '';
+  }
+  $('task').value = '';
+  autoGrow();
+  const bubble = loadingBubble();
+  try {
+    const res = await fetch(`/v1/agent/jobs?${authQuery()}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', ...authHeaders() },
+      body: JSON.stringify({ task: task || '请分析这张图片。', mode: answerMode, session_id: sessionId, attachment_text: sentText || null }),
+    });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    poll(data.job_id, bubble);
+  } catch (err) {
+    bubble.innerHTML = `<p style="color:var(--danger)">提交失败：${escapeHtml(err.message)}</p>`;
+    setStatus('提交失败', 'err'); toast('提交失败'); finish();
+  }
+}
+function autoGrow() {
+  const el = $('task');
+  el.style.height = 'auto';
+  el.style.height = Math.min(el.scrollHeight, 170) + 'px';
+}
+function resetChat() {
+  if (polling) clearTimeout(polling);
+  busy = false;
+  if (attachmentPreviewUrl) URL.revokeObjectURL(attachmentPreviewUrl);
+  sentImageUrls.forEach((url) => URL.revokeObjectURL(url));
+  sentImageUrls = [];
+  attachmentPreviewUrl = '';
+  attachmentText = '';
+  attachmentName = '';
+  $('attachmentPreviewWrap').classList.remove('show');
+  $('attachmentPreviewImg').removeAttribute('src');
+  $('attachmentStatus').textContent = '';
+  $('fileInput').value = '';
+  sessionId = newSessionId();
+  try { localStorage.setItem('dji_manual_session', sessionId); } catch {}
+  $('messages').innerHTML = '';
+  $('welcome').style.display = '';
+  $('task').value = '';
+  $('task').focus();
+  setStatus('就绪');
+  $('scroll').scrollTop = 0;
+  loadSessions();
+}
+$('run').addEventListener('click', submit);
+document.querySelectorAll('.mode-btn').forEach((button) => {
+  button.addEventListener('click', () => {
+    answerMode = button.dataset.mode || 'fast';
+    document.querySelectorAll('.mode-btn').forEach((item) => item.classList.toggle('active', item === button));
+    $('modeHint').textContent = answerMode === 'fast'
+      ? '少检索、少校验，约 5–7 秒'
+      : answerMode === 'auto'
+        ? '按风险自动选择，高风险走标准'
+        : '完整检索与校验，约 8–12 秒';
+  });
+});
+$('newChat').addEventListener('click', resetChat);
+$('attachBtn').addEventListener('click', () => $('fileInput').click());
+$('fileInput').addEventListener('change', async () => {
+  const file = $('fileInput').files && $('fileInput').files[0];
+  if (!file) return;
+  if (attachmentPreviewUrl) URL.revokeObjectURL(attachmentPreviewUrl);
+  attachmentPreviewUrl = URL.createObjectURL(file);
+  attachmentName = file.name || '图片';
+  attachmentText = '';
+  $('attachmentPreviewImg').src = attachmentPreviewUrl;
+  $('attachmentPreviewName').textContent = attachmentName;
+  $('attachmentPreviewHint').textContent = '识别中…';
+  $('attachmentPreviewWrap').classList.add('show');
+  $('attachmentStatus').className = 'attach-status';
+  $('attachmentStatus').textContent = '识别中…';
+  try {
+    const form = new FormData();
+    form.append('file', file);
+    form.append('question', $('task').value.trim());
+    const res = await fetch('/v1/attachments/analyze', { method: 'POST', body: form });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    const ocr = data.ocr || {};
+    const ocrText = (ocr.text || data.text || '').trim();
+    const vision = data.vision || {};
+    const visionParts = [];
+    if (vision.model_guess) visionParts.push(`机型猜测：${vision.model_guess}`);
+    if (vision.screen_text) visionParts.push(`屏幕文字：${vision.screen_text}`);
+    if (vision.leds) visionParts.push(`指示灯：${vision.leds}`);
+    if (vision.visible_damage && Object.keys(vision.visible_damage).length) {
+      const damage = Object.entries(vision.visible_damage)
+        .map(([key, value]) => `${key}: ${value}`).join('；');
+      visionParts.push(`可见损伤：${damage}`);
+    }
+    if (vision.uncertain && vision.uncertain.length) visionParts.push(`不确定：${vision.uncertain.join('；')}`);
+    const visionText = visionParts.length ? `图片观察（非手册）：${visionParts.join('；')}` : '';
+    attachmentText = [ocrText, visionText].filter(Boolean).join('\n\n');
+    if (!attachmentText) attachmentText = '（图片未识别到文字，视觉模型未配置或不可用）';
+    if (visionText) {
+      $('attachmentStatus').textContent = '图片已分析';
+      $('attachmentPreviewHint').textContent = '已识别，可发送';
+    } else if (ocrText) {
+      $('attachmentStatus').textContent = `已识别 ${(ocr.lines || []).length} 行文字`;
+      $('attachmentPreviewHint').textContent = '已识别，可发送';
+    } else {
+      $('attachmentStatus').className = 'attach-status error';
+      $('attachmentStatus').textContent = vision.error ? '视觉不可用，未识别到文字' : '未识别到文字';
+      $('attachmentPreviewHint').textContent = '仍可发送图片';
+    }
+  } catch (err) {
+    attachmentText = '';
+    $('attachmentStatus').className = 'attach-status error';
+    $('attachmentStatus').textContent = '图片分析失败';
+    $('attachmentPreviewHint').textContent = '仍可发送图片';
+    toast('图片识别失败');
+  } finally {
+    $('fileInput').value = '';
+  }
+});
+$('attachmentRemove').addEventListener('click', () => {
+  if (attachmentPreviewUrl) URL.revokeObjectURL(attachmentPreviewUrl);
+  attachmentPreviewUrl = '';
+  attachmentText = '';
+  attachmentName = '';
+  $('attachmentPreviewWrap').classList.remove('show');
+  $('attachmentPreviewImg').removeAttribute('src');
+  $('attachmentStatus').textContent = '';
+  $('fileInput').value = '';
+});
+$('task').addEventListener('input', autoGrow);
+$('task').addEventListener('keydown', (event) => {
+  if (event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); submit(); }
+});
+document.querySelectorAll('.suggestion').forEach((button) => {
+  button.addEventListener('click', () => {
+    $('task').value = button.dataset.q || '';
+    autoGrow();
+    submit();
+  });
+});
+setTimeout(loadSessions, 600);
+</script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+# Agent 可选依赖（核心运行时仅复用 requirements.txt 中的 requests/pyyaml）
+# 安装：pip install -r requirements-agent.txt
+
+# HTTP API
+fastapi>=0.110
+uvicorn>=0.27
+
+# 测试
+pytest>=7.4
+
+# 可选：重建演示语料时解析 PDF（也可用 pip install pypdf cryptography --target .vendor）
+# pypdf>=5.0
+# cryptography>=3.1
+
+# 可选：中文分词（当前实现使用轻量 n-gram，无 jieba 也能运行）
+# jieba>=0.42

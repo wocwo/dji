@@ -1,0 +1,69 @@
+# DeepSeek 官方 API 配置
+# 用法：python -m agent run "..." --config configs/agent.deepseek.yaml
+
+agent:
+  name: dji-manual-agent-deepseek
+  max_steps: 8
+  engine: legacy
+  max_tool_calls: 12
+  max_llm_calls: 10
+  max_seconds: 180
+  max_consecutive_errors: 3
+  max_observation_chars: 7000
+  max_history_chars: 12000
+  plain_text_final: true
+  evidence_guard: true
+  evidence_auto_search: true
+  max_evidence_retries: 1
+  grounding_check: true
+  claim_verifier: true
+  claim_verifier_max_claims: 12
+  claim_verifier_high_risk_only: true
+  citation_align: false
+  fact_coverage: true
+  max_fact_retries: 1
+
+llm:
+  provider: deepseek
+  model: deepseek-flash
+  base_url: https://api.deepseek.com
+  api_key: ${DEEPSEEK_API_KEY:-}
+  temperature: 0.2
+  thinking: true
+  reasoning_effort: high
+  max_tokens: 4096
+  timeout: 180
+  tool_mode: native
+
+knowledge:
+  backend: jsonl
+  jsonl_path: data/agent_manual_kb.jsonl
+  chroma_path: ./chroma_final
+  collection: uav_manual_db
+  top_k: 8
+  candidate_limit: 300
+  max_terms: 6
+  search_timeout: 25
+  max_passage_chars: 1200
+
+memory:
+  enabled: true
+  db_path: .agent/memory.db
+  history_turns: 6
+
+trace:
+  enabled: true
+  dir: .agent/traces
+  include_llm_output: false
+
+tools:
+  enabled:
+    - manual_search
+    - manual_fetch
+    - calculator
+    - clock
+    - update_plan
+    - save_note
+    - recall_notes
+  allow_risky: false
+  timeout: 45
